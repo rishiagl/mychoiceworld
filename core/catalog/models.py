@@ -1,50 +1,6 @@
 from django.db import models
-from django.contrib import admin
 from django.forms import ValidationError
 from django.utils.text import slugify
-
-
-class Brand(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    shortName = models.CharField(max_length=5, unique=True, editable=True)
-
-    def save(self, *args, **kwargs):
-        self.name = slugify(self.name).upper()
-        self.shortName = self.shortName.upper()
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
-
-
-class Category(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    shortName = models.CharField(max_length=5, unique=True)
-
-    def save(self, *args, **kwargs):
-        self.name = slugify(self.name).upper()
-        self.shortName = self.shortName.upper()
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
-
-
-class Product(models.Model):
-    model = models.CharField(max_length=100, blank=True, editable=True)
-    brand = models.ForeignKey(Brand, on_delete=models.RESTRICT)
-    category = models.ForeignKey(Category, on_delete=models.RESTRICT)
-    name = models.SlugField(max_length=100, unique=True,
-                            blank=True, editable=False)
-
-    def save(self, *args, **kwargs):
-        self.name = slugify(self.brand.shortName + '-' +
-                            self.category.shortName + '-' + self.model).upper()
-        self.model = slugify(self.model).upper()
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
 
 
 def validate_Code(value):
@@ -75,3 +31,51 @@ class GstClassification(models.Model):
 
     def __str__(self):
         return self.type + '-' + self.code + '-' + str(self.rate)
+
+
+class Brand(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    short_name = models.CharField(max_length=5, unique=True, editable=True)
+
+    def save(self, *args, **kwargs):
+        self.name = slugify(self.name).upper()
+        self.short_name = self.short_name.upper()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    short_name = models.CharField(max_length=5, unique=True)
+
+    def save(self, *args, **kwargs):
+        self.name = slugify(self.name).upper()
+        self.short_name = self.short_name.upper()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Categories"
+
+
+class Product(models.Model):
+    model = models.CharField(max_length=100, blank=True, editable=True)
+    brand = models.ForeignKey(Brand, on_delete=models.RESTRICT)
+    category = models.ForeignKey(Category, on_delete=models.RESTRICT)
+    gst_classification = models.ForeignKey(
+        GstClassification, on_delete=models.RESTRICT)
+    name = models.SlugField(max_length=100, unique=True,
+                            blank=True, editable=False)
+
+    def save(self, *args, **kwargs):
+        self.name = slugify(self.brand.short_name + '-' +
+                            self.category.short_name + '-' + self.model).upper()
+        self.model = slugify(self.model).upper()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
