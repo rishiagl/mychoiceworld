@@ -142,3 +142,5 @@ TAILWIND_APP_NAME = 'theme'
 SECURE_SSL_REDIRECT = os.environ.get('DJANGO_DEBUG', '') == 'True'
 SESSION_COOKIE_SECURE = os.environ.get('DJANGO_DEBUG', '') == 'True'
 CSRF_COOKIE_SECURE = os.environ.get('DJANGO_DEBUG', '') == 'True'
+
+
