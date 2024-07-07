@@ -34,15 +34,20 @@ class Organisation(models.Model):
         return self.name
 
 
-class Account(models.Model):
+class Customer(models.Model):
     name = models.CharField(max_length=20, blank=False)
-    email = models.EmailField(blank=False, unique=True)
-    phone_no = models.CharField(max_length=10, blank=False)
-    organisations = models.ManyToManyField(Organisation)
+    email = models.EmailField(blank=True)
+    phone_no = models.CharField(max_length=10, blank=False, unique=True)
+    address_line_1 = models.CharField(max_length=20, blank=False)
+    address_line_2 = models.CharField(max_length=20, blank=False)
+    city = models.CharField(max_length=20, blank=False)
+    state = models.CharField(
+        max_length=100, choices=StateChoice, blank=False, default='JHARKHAND')
+    pincode = models.CharField(max_length=6, blank=False)
 
     def save(self, *args, **kwargs):
         user = User.objects.create_user(
-            username=self.email, email=self.email, password=self.email).save()
+            username=self.phone_no, email=self.email, password=self.phone_no).save()
         super().save(*args, **kwargs)
         
     def __str__(self):

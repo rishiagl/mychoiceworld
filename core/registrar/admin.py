@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import Organisation, Account
+from .models import Organisation, Customer
 
 
 class OrganisationAdmin(admin.ModelAdmin):
@@ -14,8 +14,8 @@ class OrganisationAdmin(admin.ModelAdmin):
 admin.site.register(Organisation, OrganisationAdmin)
 
 
-class AccountAdmin(admin.ModelAdmin):
-    list_display = ('name', 'phone_no', 'email')
+class CustomerAdmin(admin.ModelAdmin):
+    list_display = ('name', 'phone_no', 'city')
 
 
-admin.site.register(Account, AccountAdmin)
+admin.site.register(Customer, CustomerAdmin)

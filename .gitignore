@@ -1,9 +1,11 @@
 .venv
 
-/core/catalog/migrations
-/core/inventory/migrations
-/core/registrar/migrations
+# Database Migrations
+**/migrations/
 
+# Database
 /core/db.sqlite3
 
+# Pycache
 **/__pycache__/
+/core/catalog/__pycache__

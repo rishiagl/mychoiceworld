@@ -7,8 +7,8 @@ from django.utils.text import slugify
 from fpdf import FPDF
 
 
-admin.site.site_header = "Complete Enterprise Resource Management Software"
-admin.site.site_title = "CERMS"
+admin.site.site_header = "My Choice Enterprise Resource Management"
+admin.site.site_title = "My Choice"
 admin.site.index_title = "Administration Panel"
 
 

@@ -2,6 +2,7 @@ from django.db import models
 from catalog.models import Product
 from registrar.models import Organisation
 from django.utils.text import slugify
+import datetime
 
 StateChoice = (
     ('JHARKHAND', 'JHARKHAND'),
@@ -36,3 +37,13 @@ class StockItem(models.Model):
         Warehouse, on_delete=models.RESTRICT)
     product = models.ForeignKey(Product, on_delete=models.RESTRICT)
     qty = models.IntegerField(blank=False)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        StockItemChangeLog.objects.create(
+            date=datetime.datetime.now(), stock_item=self)
+
+
+class StockItemChangeLog(models.Model):
+    date = models.DateTimeField(blank=False)
+    stock_item = models.ForeignKey(StockItem, on_delete=models.RESTRICT)
