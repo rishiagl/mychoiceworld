@@ -68,14 +68,13 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.RESTRICT)
     gst_classification = models.ForeignKey(
         GstClassification, on_delete=models.RESTRICT)
-    name = models.SlugField(max_length=100, unique=True,
-                            blank=True, editable=False)
+
+    def name(self, *args, **kwargs):
+        return self.brand.short_name + '-' + self.category.short_name + '-' + self.model
 
     def save(self, *args, **kwargs):
-        self.name = slugify(self.brand.short_name + '-' +
-                            self.category.short_name + '-' + self.model).upper()
         self.model = slugify(self.model).upper()
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.name
+        return self.name()
