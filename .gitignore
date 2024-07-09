@@ -9,3 +9,7 @@
 # Pycache
 **/__pycache__/
 /core/catalog/__pycache__
+
+# Settings.py
+
+/core/core/settings.py
