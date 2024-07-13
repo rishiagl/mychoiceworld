@@ -68,6 +68,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.RESTRICT)
     gst_classification = models.ForeignKey(
         GstClassification, on_delete=models.RESTRICT)
+    is_active = models.BooleanField(default=True)
 
     def name(self, *args, **kwargs):
         return self.brand.short_name + '-' + self.category.short_name + '-' + self.model

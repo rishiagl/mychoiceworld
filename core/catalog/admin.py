@@ -30,7 +30,7 @@ def Download_QR_Code(modeladmin, request, queryset):
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'model', 'brand', 'category', 'gst_classification')
-    list_filter = ["brand", "category"]
+    list_filter = ["brand", "category", "is_active"]
     search_fields = ("model__startswith",)
     actions = [Download_QR_Code]
 
