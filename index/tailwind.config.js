@@ -7,9 +7,9 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        'bgi-1': "url('/1.jpg')",
-        'bgi-2': "url('/2.jpg')",
-        'bgi-3': "url('/3.jpg')",
+        'bgi-1': "url('/one.jpg')",
+        'bgi-2': "url('/two.jpg')",
+        'bgi-3': "url('/three.jpg')",
       }
     },
     plugins: [],

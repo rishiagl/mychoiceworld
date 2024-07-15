@@ -7,10 +7,8 @@ function App() {
   const [contactNumber, setContactNumber] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  const imageList = ["bgi-1", "bgi-2", "bgi-3"]
-
   function changeBgImage() {
-    setCurrentBgImage((currentBgImage + 1) % imageList.length);
+    setCurrentBgImage((currentBgImage + 1) % 3);
   }
 
   useEffect(() => {
@@ -44,8 +42,7 @@ function App() {
             </div>
           </div>
         </div>
-        <div className='hidden bg-bgi-1 bg-bgi-2 bg-bgi-3'></div>
-        <div className={`flex flex-col justify-center pt-36 h-screen bg-center bg-no-repeat bg-cover bg-${imageList[currentBgImage]} translate-y ease-in-out duration-1000`}>
+        <div className={`flex flex-col justify-center pt-36 h-screen bg-center bg-no-repeat bg-cover ${currentBgImage == 0 ? 'bg-bgi-1' : currentBgImage == 1 ? 'bg-bgi-2' : 'bg-bgi-3'} translate-y ease-in-out duration-1000`}>
           <div className='flex justify-center p-2'>
             <div className='flex-col w-fit h-fit justify-center space-y-4 px-10 bg-slate-950 bg-opacity-50 p-10 rounded-xl'>
               <div className='flex justify-center'>
