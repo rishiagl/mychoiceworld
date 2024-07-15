@@ -5,6 +5,7 @@ import NumberInputGroup from './NumberInputGroup';
 function App() {
   const [currentBgImage, setCurrentBgImage] = useState(0);
   const [contactNumber, setContactNumber] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   const imageList = ["bgi-1", "bgi-2", "bgi-3"]
 
@@ -43,6 +44,7 @@ function App() {
             </div>
           </div>
         </div>
+        <div className='hidden bg-bgi-1 bg-bgi-2 bg-bgi-3'></div>
         <div className={`flex flex-col justify-center pt-36 h-screen bg-center bg-no-repeat bg-cover bg-${imageList[currentBgImage]} translate-y ease-in-out duration-1000`}>
           <div className='flex justify-center p-2'>
             <div className='flex-col w-fit h-fit justify-center space-y-4 px-10 bg-slate-950 bg-opacity-50 p-10 rounded-xl'>
@@ -51,7 +53,10 @@ function App() {
                   Need assistance? Request a callback and let our experts help you find the perfect electronics and home appliances!
                 </div>
               </div>
-              <NumberInputGroup></NumberInputGroup>
+              <div className={`${submitted ? '' : 'hidden'} flex justify-center text-green-400 text-4xl font-semibold`}>Thank you! We'll get back to you soon.</div>
+              <div className={`${submitted ? 'hidden' : ''}`}>
+                <NumberInputGroup setSubmitted={setSubmitted}></NumberInputGroup>
+              </div>
             </div>
           </div>
         </div>

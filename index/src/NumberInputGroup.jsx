@@ -1,7 +1,7 @@
 import NumberInput from "./NumberInput";
 import { useState, queryString } from "react";
 
-const NumberInputGroup = () => {
+const NumberInputGroup = ({ setSubmitted }) => {
     //state to store all input boxes    
     const [inputValues, setInputValues] = useState({
         input1: '',
@@ -31,8 +31,9 @@ const NumberInputGroup = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ phone_no: "7970460076" })
         };
-        const response = await fetch('http://127.0.0.1:8000/marketing/callbackrequest/', requestOptions);
+        const response = await fetch(import.meta.env.VITE_BACKEND_BASE_URL + '/marketing/callbackrequest/', requestOptions);
         const data = await response.json();
+        setSubmitted(true)
         // this.setState({ postId: data.id });
     };
     //return child component
