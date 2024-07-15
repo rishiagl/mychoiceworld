@@ -1,12 +1,32 @@
+import { useState, useEffect } from 'react';
 import './App.css'
-// import logoImage from './mychoice.png'
+import NumberInputGroup from './NumberInputGroup';
 
 function App() {
+  const [currentBgImage, setCurrentBgImage] = useState(0);
+  const [contactNumber, setContactNumber] = useState("");
+
+  const imageList = ["bgi-1", "bgi-2", "bgi-3"]
+
+  function changeBgImage() {
+    setCurrentBgImage((currentBgImage + 1) % imageList.length);
+  }
+
+  useEffect(() => {
+    setTimeout(changeBgImage, 3000);
+  }, [currentBgImage]);
+
+  function handleCNChange() {
+    if (contactNumber.length == 10) {
+
+    }
+  }
+
 
   return (
     <>
       <div className='relative w-dvh'>
-        <div className='fixed flex flex-row justify-between w-full h-fit lg:p-4 p-2 font-sans shadow-lg rounded-xl bg-white'>
+        <div className='fixed flex flex-row justify-between w-full h-fit lg:p-4 p-2 font-sans shadow-lg rounded-xl bg-sky-50'>
           <div className='flex flex-col justify-center w-1/3'>
             <div className='text-xl font-bold text-rose-800'>MY CHOICE ELECTRONICS</div>
           </div>
@@ -23,8 +43,17 @@ function App() {
             </div>
           </div>
         </div>
-        <div className="flex pt-36 h-screen bg-center bg-no-repeat bg-cover bg-[url('/hero-1920x1080.jpg')]">
-
+        <div className={`flex flex-col justify-center pt-36 h-screen bg-center bg-no-repeat bg-cover bg-${imageList[currentBgImage]} translate-y ease-in-out duration-1000`}>
+          <div className='flex justify-center p-2'>
+            <div className='flex-col w-fit h-fit justify-center space-y-4 px-10 bg-slate-950 bg-opacity-50 p-10 rounded-xl'>
+              <div className='flex justify-center'>
+                <div className='flex max-w-5xl font-mono italic text-white text-3xl font-bold'>
+                  Need assistance? Request a callback and let our experts help you find the perfect electronics and home appliances!
+                </div>
+              </div>
+              <NumberInputGroup></NumberInputGroup>
+            </div>
+          </div>
         </div>
         <div className='contactus flex flex-col bg-slate-50 w-full shadow-xl rounded-xl' id='contactus'>
           <div className='flex lg:flex-row flex-col justify-between w-full space-x-4 p-2'>
@@ -103,7 +132,7 @@ function App() {
             Copyright©2024 mychoice & Rishi Agarwal
           </div>
         </div>
-      </div>
+      </div >
     </>
   )
 }
