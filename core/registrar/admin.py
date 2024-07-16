@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import Organisation, Customer
+from .models import Organisation, Customer, Financer
 
 
 class OrganisationAdmin(admin.ModelAdmin):
@@ -15,7 +15,13 @@ admin.site.register(Organisation, OrganisationAdmin)
 
 
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'phone_no', 'city')
+    list_display = ('name', 'primary_phone_no', 'city')
 
 
 admin.site.register(Customer, CustomerAdmin)
+
+# class FinancerAdmin(admin.ModelAdmin):
+#     list_display = ('name')
+
+
+# admin.site.register(Financer, FinancerAdmin)
