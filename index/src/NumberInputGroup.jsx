@@ -26,10 +26,11 @@ const NumberInputGroup = ({ setSubmitted }) => {
     //this function processes form submission
     const handleSubmit = async () => {
         event.preventDefault()
+        let phone_string = inputValues.input1 + inputValues.input2 + inputValues.input3 + inputValues.input4 + inputValues.input5 + inputValues.input6 + inputValues.input7 + inputValues.input8 + inputValues.input9 + inputValues.input10;
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ phone_no: "7970460076" })
+            body: JSON.stringify({ phone_no: phone_string })
         };
         const response = await fetch(import.meta.env.VITE_BACKEND_BASE_URL + '/marketing/callbackrequest/', requestOptions);
         const data = await response.json();
