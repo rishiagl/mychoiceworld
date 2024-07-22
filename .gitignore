@@ -9,6 +9,7 @@
 # Pycache
 **/__pycache__/
 /core/catalog/__pycache__
+/core/core/__pycache__
 
 # Settings.py
 
