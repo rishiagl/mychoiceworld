@@ -4,13 +4,13 @@
 **/migrations/
 
 # Database
-/core/db.sqlite3
+/internal/db.sqlite3
 
 # Pycache
 **/__pycache__/
-/core/catalog/__pycache__
-/core/core/__pycache__
+/internal/catalog/__pycache__
+/internal/internal/__pycache__
 
 # Settings.py
 
-/core/core/settings.py
+/internal/internal/settings.py
