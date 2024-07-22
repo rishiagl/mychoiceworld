@@ -109,7 +109,7 @@ function App() {
         </div>
         <div className='flex flex-col'>
           <div className='flex justify-center p-4'>
-            <a href='https://api.mychoiceworld.in/admin'>For Staff Login Please click here</a>
+            <a href='https://internal.mychoiceworld.in'>For Staff Login Please click here</a>
           </div>
           <div className='flex justify-center'>
             Copyright©2024 mychoice & Rishi Agarwal
@@ -122,9 +122,9 @@ function App() {
             </a>
           </div>
           <div className='hidden lg:flex flex-row space-x-4 justify-end w-2/3 px-4'>
-            <div className='flex flex-col w-fit text-xl justify-center font-semibold'>
+            {/* <div className='flex flex-col w-fit text-xl justify-center font-semibold'>
               <a href='#contactus'>Staff Portal</a>
-            </div>
+            </div> */}
             <div className='flex flex-col w-fit text-xl justify-center font-semibold'>
               <a href='#contactus'>Contact Us</a>
             </div>
@@ -137,9 +137,9 @@ function App() {
             </div>
           </div>
           <div className={`${isSliderOpen ? '' : 'translate-x-32'} absolute -right-0 -bottom-20 flex flex-col p-4 text-lg space-y-2 font-semibold bg-white rounded-b-lg transform transition ease-in-out delay-200`}>
-            <div>
+            {/* <div>
               <a href='https://portal.mychoiceworld.in'>Staff Portal</a>
-            </div>
+            </div> */}
             <div>
               <a href='#contactus' onClick={() => { setIsSliderOpen(!isSliderOpen) }}>Contact Us</a>
             </div>
