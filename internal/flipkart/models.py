@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from django.utils.timezone import now
 
 DeliveryStatus = (
     ('ON_THE_WAY', 'ON_THE_WAY'),
@@ -15,8 +16,8 @@ ShipmentType = (
 )
 
 
-class OrderList(models.Model):
-    order_date = models.DateField()
+class Order(models.Model):
+    order_date = models.DateField(default=now)
     order_id = models.CharField(max_length=23, blank=False, unique=True)
     product = models.CharField(max_length=100, blank=True)
     buyer_name = models.CharField(max_length=50, blank=True)
@@ -24,8 +25,9 @@ class OrderList(models.Model):
     state = models.CharField(max_length=50, blank=True)
     pincode = models.CharField(max_length=6, blank=True)
     tracking_id = models.CharField(max_length=20, blank=False, unique=True)
+    delivery_date = models.DateField(blank=True, null=True)
     delivery_status = models.CharField(
         max_length=100, choices=DeliveryStatus, blank=False, default='ON_THE_WAY')
     shipment_type = models.CharField(
         max_length=100, choices=ShipmentType, blank=False, default='NORMAL')
-    total_disbursement_amount = models.IntegerField(blank=True, default=0)
+    final_settlement = models.IntegerField(blank=True, default=0)

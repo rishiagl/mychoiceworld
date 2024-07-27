@@ -17,12 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from . import views
+# from oauth2_provider import urls as oauth2_urls
 
 
 urlpatterns = [
     path("", views.index, name="index"),
+    # path('o/', include(oauth2_urls)),
     path("__reload__/", include("django_browser_reload.urls")),
     path('marketing/', include("marketing.urls")),
     path('catalog/', include("catalog.urls")),
+    path('flipkart/', include("flipkart.urls")),
     path('admin/', admin.site.urls),
 ]

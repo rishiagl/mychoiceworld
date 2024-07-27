@@ -1,12 +1,12 @@
 from django.contrib import admin
-from flipkart.models import OrderList
+from flipkart.models import Order
 
 
-class OrderListModel(admin.ModelAdmin):
+class OrderModel(admin.ModelAdmin):
     list_display = ('order_date', 'order_id', 'tracking_id',
-                    'shipment_type', 'delivery_status', 'total_disbursement_amount')
+                    'shipment_type', 'delivery_status', 'final_settlement')
 
     list_filter = ('shipment_type', 'delivery_status')
 
 
-admin.site.register(OrderList, OrderListModel)
+admin.site.register(Order, OrderModel)

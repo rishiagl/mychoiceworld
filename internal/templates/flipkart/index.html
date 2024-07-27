@@ -1,0 +1,81 @@
+{% extends "flipkart/base.html" %}
+{% block content %}
+<div class="flex flex-col h-full w-screen lg:max-w-sm p-2 space-y-4 justify-between text-xl font-bold text-gray-700">
+    <div class="flex flex-row h-fit w-full space-x-1 px-3 text-sm font-bold">
+        <div class="flex w-full justify-start">FY 24-25</div>
+        <div class="flex w-full justify-end">12:05 PM, 17/07/24</div>
+    </div>
+    <div class="flex w-full h-1/4">
+        <canvas id="myChart"></canvas>
+    </div>
+    <div class="flex flex-col space-y-1 p-1 font-semibold text-sm">
+        <div class="text-orange-500">
+            Returns above 30 Days:
+        </div>
+        <div class="text-orange-700">
+            Returns above 60 Days:
+        </div>
+    </div>
+    <div class="flex flex-col h-3/5 space-y-3">
+        <div class="flex justify-center h-full w-full rounded-lg shadow-md bg-blue-400">
+            <a class="flex flex-col justify-center h-full w-full" href="/flipkart/dispatch">
+                <div class="flex justify-center">
+                    DISPATCH
+                </div>
+            </a>
+        </div>
+        <div class="flex justify-center h-full w-full rounded-lg shadow-md bg-red-400">
+            <a class="flex flex-col justify-center h-full w-full" href="/flipkart/returns">
+                <div class="flex justify-center">
+                    RETURN
+                </div>
+            </a>
+        </div>
+        <div class="flex justify-center h-full w-full rounded-lg shadow-md bg-green-400 ">
+            <a class="flex flex-col justify-center h-full w-full" href="/flipkart/payment">
+                <div class="flex justify-center">
+                    PAYMENT
+                </div>
+            </a>
+        </div>
+        <div class="flex justify-center h-full w-full rounded-lg shadow-md bg-orange-400">
+            <a class="flex flex-col justify-center h-full w-full" href="/flipkart/report">
+                <div class="flex justify-center">
+                    REPORT
+                </div>
+            </a>
+        </div>
+        <!-- <div class="flex justify-center">
+            <form id="logout-form" method="post" action="{% url 'admin:logout' %}" class="w-full">
+                {% csrf_token %}
+                <button type="submit"
+                    class="flex justify-center rounded-lg p-5 shadow-md w-full text-rose-800 bg-gray-300 ">Log
+                    Out</button>
+            </form>
+        </div> -->
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

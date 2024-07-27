@@ -1,0 +1,56 @@
+{% extends "flipkart/base.html" %}
+{% block content %}
+<div class="flex flex-col justify-start h-full w-screen lg:max-w-sm space-y-2 p-4">
+    {% if error_message %}
+    <div class="flex w-full bg-red-600 text-white rounded p-2">
+        {{error_message}}
+    </div>
+    {% endif %}
+    {% if warning_message %}
+    <div class="flex w-full bg-yellow-600 text-white rounded p-2">
+        {{warning_message}}
+    </div>
+    {% endif %}
+    {% if success_message %}
+    <div class="flex w-full bg-green-600 text-white rounded p-2">
+        {{success_message}}
+    </div>
+    {% endif %}
+    {% if normal_message %}
+    <div class="flex w-full bg-blue-600 text-white rounded p-2">
+        {{normal_message}}
+    </div>
+    {% endif %}
+    <form id="dispatch_form" method="post" onsubmit="return validateForm();"
+        class="flex flex-col p-2 bg-gray-50 rounded-lg space-y-4">
+        {% csrf_token %}
+        <div class="flex flex-col w-full">
+            <label for="order_id">Order Id: </label>
+            <input id="order_id" type="text" name="order_id" class="rounded-lg">
+        </div>
+        <div class="flex flex-col">
+            <label for="tracking_id">Tracking Id: </label>
+            <input id="tracking_id" type="text" name="tracking_id" class="rounded-lg">
+        </div>
+        <div class="flex justify-center italic">
+            or
+        </div>
+        <div class="flex justify-center">Upload in Bulk!</div>
+        <div class="flex">
+            <input type="file" id="file" name="file" accept=".csv" onchange="return fileValidation();">
+        </div>
+        <div class="flex flex-row w-full justify-end space-x-2">
+            <a class="p-2 px-4 bg-gray-50 rounded-lg text-sky-500" href="/flipkart/dispatch">Reset</a>
+            <button type="submit" value="submit" class="p-2 px-4 bg-sky-500 rounded-lg text-white">Submit</button>
+        </div>
+    </form>
+    <div class="flex flex-col p-2 bg-sky-50 space-y-2 rounded-lg">
+        <h1 class="font-semibold">Bulk Upload Feature Guideline</h1>
+        <p>1. Go to Flipkart Seller Dashboard</p>
+        <p>2, Go to My Order's Tab</p>
+        <p>3. Go to Pending Handover.</p>
+        <p>4. Click Download Order List</p>
+        <p>5. Upload the downloaded file.</p>
+    </div>
+</div>
+{% endblock %}
