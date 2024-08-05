@@ -995,6 +995,10 @@ select {
   border-width: 2px;
 }
 
+.border {
+  border-width: 1px;
+}
+
 .border-sky-500 {
   --tw-border-opacity: 1;
   border-color: rgb(14 165 233 / var(--tw-border-opacity));
@@ -1247,6 +1251,11 @@ select {
 
 .hover\:border-2:hover {
   border-width: 2px;
+}
+
+.hover\:bg-sky-200:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(186 230 253 / var(--tw-bg-opacity));
 }
 
 .hover\:shadow-2xl:hover {

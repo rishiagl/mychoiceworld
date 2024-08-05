@@ -25,6 +25,10 @@
         class="flex flex-col p-2 bg-gray-50 rounded-lg space-y-4">
         {% csrf_token %}
         <div class="flex flex-col w-full">
+            <label for="order_id">Dispatch Date: </label>
+            <input id="order_date" type="date" name="order_date" class="rounded-lg">
+        </div>
+        <div class="flex flex-col w-full">
             <label for="order_id">Order Id: </label>
             <input id="order_id" type="text" name="order_id" class="rounded-lg">
         </div>

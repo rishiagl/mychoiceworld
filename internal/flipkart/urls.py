@@ -6,4 +6,5 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("dispatch", views.dispatch, name="dispatch"),
     path("returns", views.returns, name="returns"),
+    path("payments", views.payments, name="payments"),
 ]

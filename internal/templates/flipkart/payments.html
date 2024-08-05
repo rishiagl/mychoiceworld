@@ -1,0 +1,92 @@
+{% extends "flipkart/base.html" %}
+{% block content %}
+<div class="flex flex-col w-screen lg:max-w-sm justify-center p-2 text-lg font-bold space-y-6">
+    {% if error_message %}
+    <div class="flex w-full bg-red-600 text-white rounded p-2">
+        {{error_message}}
+    </div>
+    {% endif %}
+    {% if warning_message %}
+    <div class="flex w-full bg-yellow-600 text-white rounded p-2">
+        {{warning_message}}
+    </div>
+    {% endif %}
+    {% if success_message %}
+    <div class="flex w-full bg-green-600 text-white rounded p-2">
+        {{success_message}}
+    </div>
+    {% endif %}
+    {% if normal_message %}
+    <div class="flex w-full bg-blue-600 text-white rounded p-2">
+        {{normal_message}}
+    </div>
+    {% endif %}
+    <div class="relative flex flex-col border-2 border-sky-500 rounded-md p-2 pt-8">
+        <form id="payment_form" method="post">
+            {% csrf_token %}
+            <div
+                class="absolute -top-5 left-2 justify-center bg-white text-sky-700 p-2 border-2 rounded-xl border-sky-500">
+                <p id="step"></p>
+            </div>
+            <div class="tab hidden flex flex-col p-4 w-full text-sky-700">
+                <label>Enter Order ID:</label>
+                <input type="text" id="order_id" name="order_id"
+                    class="flex w-full appearance-none border-2 border-sky-500 rounded-md accent-sky-500" required>
+            </div>
+            <div class="tab hidden flex flex-col justify-center w-full space-y-4 p-2 text-sky-800 transition transform ease-in-out delay-500">
+                <p id="display_order_id" class="flex justify-center">OD22222222222222222222222</p>
+                <div class="flex w-full justify-center">
+                    <label class="flex flex-col p-2 justify-center">Amount:</label>
+                    <input type="number" id="final_settlement" name="final_settlement" class="flex w-full p-4 justify-center rounded-md border-2 border-sky-500 " required>
+                </div>
+                <div class="flex justify-between">
+                    <button class="flex p-2 justify-center rounded-md hover:border-2 border-sky-500"
+                        onclick="nextPrev(-1)">
+                        Back
+                    </button>
+                    <button type="submit" value="submit" class="flex p-2  border-2 border-sky-500 rounded hover:bg-sky-200" onclick="nextprev(1)">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    document.getElementById("order_id").addEventListener('input', OrderIdHandler)
+    var tab = document.getElementsByClassName("tab");
+    var currentTab = 0;
+    showTab(currentTab);
+
+    function showTab(n) {
+        var x = document.getElementsByClassName("tab");
+        x[n].classList.remove("hidden");
+        fixStepIndicator(n)
+    }
+
+    function nextPrev(n) {
+        var x = document.getElementsByClassName("tab");
+
+        x[currentTab].classList.add("hidden");
+        currentTab = currentTab + n;
+        if (currentTab >= x.length) {
+            document.getElementById("payment_form").submit();
+            return false;
+        }
+        showTab(currentTab);
+    }
+
+    function fixStepIndicator(n) {
+        var x = document.getElementById("step");
+        x.innerHTML = "Step " + (currentTab + 1) + " of " + tab.length;
+    }
+
+    function OrderIdHandler() {
+        order_id = document.getElementById("order_id");
+        if (order_id.value.length == 20) {
+            document.getElementById("display_order_id").innerHTML = order_id.value
+            nextPrev(1)
+            return false;
+        }
+        return false;
+    }
+</script>
+{% endblock %}
