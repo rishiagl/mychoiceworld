@@ -16,8 +16,26 @@ def index(request):
     d20_ago = today - timedelta(days=20)
     d25_ago = today - timedelta(days=25)
     d30_ago = today - timedelta(days=30)
-    order_count = [Order.objects.filter(order_date__range=(d5_ago, today)).count(), Order.objects.filter(order_date__range=(d10_ago, d5_ago)).count(), Order.objects.filter(order_date__range=(d15_ago, d10_ago)).count(), Order.objects.filter(order_date__range=(d20_ago, d15_ago)).count(), Order.objects.filter(order_date__range=(d25_ago, d20_ago)).count(), Order.objects.filter(order_date__range=(d30_ago, d25_ago)).count()][::-1]
-    return render(request, "flipkart/index.html", {"order_count": order_count})
+    d60_ago = today - timedelta(days=60)
+    d999_ago = today - timedelta(days=999)
+    order_count = [Order.objects.filter(order_date__range=(d5_ago, today)).count(), Order.objects.filter(order_date__range=(d10_ago, d5_ago)).count(), Order.objects.filter(order_date__range=(d15_ago, d10_ago)).count(
+    ), Order.objects.filter(order_date__range=(d20_ago, d15_ago)).count(), Order.objects.filter(order_date__range=(d25_ago, d20_ago)).count(), Order.objects.filter(order_date__range=(d30_ago, d25_ago)).count()][::-1]
+
+    pending_over_30_list = Order.objects.filter(
+        order_date__range=(d60_ago, d30_ago))
+    pending_over_30_count = 0
+    for order in pending_over_30_list:
+        if order.pending == 'YES':
+            pending_over_30_count = pending_over_30_count + 1
+
+    pending_over_60_list = Order.objects.filter(
+        order_date__range=(d999_ago, d60_ago))
+    pending_over_60_count = 0
+    for order in pending_over_60_list:
+        if order.pending == 'YES':
+            pending_over_60_count = pending_over_60_count + 1
+
+    return render(request, "flipkart/index.html", {"order_count": order_count, "pending_over_30_count": pending_over_30_count, "pending_over_60_count": pending_over_60_count})
 
 
 @login_required(login_url="/admin/login/?next=/flipkart/dispatch")
