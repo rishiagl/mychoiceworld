@@ -23,9 +23,21 @@ class ReadOnlyVariableFilter(admin.SimpleListFilter):
         return queryset
 
 
+def mark_as_delivered(modeladmin, request, queryset):
+    updated_count = queryset.update(delivery_status='DELIVERED')
+    modeladmin.message_user(
+        request, f"{updated_count} orders marked as delivered.")
+
+
+mark_as_delivered.short_description = "Mark selected orders as Delivered"
+
+
 class OrderModel(admin.ModelAdmin):
     list_display = ('order_date', 'order_id', 'tracking_id',
                     'shipment_type', 'delivery_status', 'final_settlement', 'pending')
+
+    search_fields = ("order_id", "tracking_id")
+    actions = [mark_as_delivered]
 
     list_filter = (ReadOnlyVariableFilter, 'shipment_type', 'delivery_status')
 
