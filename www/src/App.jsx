@@ -13,26 +13,23 @@ function App() {
   }
 
   useEffect(() => {
-    setTimeout(changeBgImage, 3000);
+    setTimeout(changeBgImage, 7000);
   }, [currentBgImage]);
 
 
   return (
     <>
       <div className='relative w-dvh'>
-        <div className={`relative flex flex-col justify-center h-screen bg-center bg-no-repeat bg-cover ${currentBgImage == 0 ? 'bg-bgi-1' : currentBgImage == 1 ? 'bg-bgi-2' : currentBgImage == 2 ? 'bg-bgi-3' : 'bg-bgi-4'} translate-y ease-in-out duration-1000`}>
-          <div className='flex justify-center p-6'>
-            {/* <div className='flex-col w-fit h-fit justify-center space-y-4 lg:px-10 px-6 bg-slate-950 bg-opacity-60 lg:p-10 p-6 rounded-xl'>
-              <div className='flex justify-center'>
-                <div className='flex max-w-5xl font-mono italic text-white lg:text-3xl text-2xl'>
-                  Need assistance? Request a callback and let our experts help you find the perfect electronics and home appliances!
-                </div>
-              </div>
-              <div className={`${submitted ? '' : 'hidden'} flex justify-center text-green-400 lg:text-4xl text-3xl font-semibold`}>Thank you! We'll get back to you soon.</div>
-              <div className={`${submitted ? 'hidden' : ''}`}>
-                <NumberInputGroup setSubmitted={setSubmitted}></NumberInputGroup>
-              </div>
-            </div> */}
+        <div className={`relative flex flex-col justify-center h-screen bg-white bg-center bg-no-repeat bg-cover translate-y ease-in-out duration-1000`}>
+          <div className='flex lg:flex-row flex-col h-full justify-center p-6 space-x-2'>
+            <div className='flex flex-col lg:h-full h-2/3 lg:justify-center justify-end lg:w-1/3 p-5 space-y-5'>
+              <div className='lg:text-7xl text-5xl text-blue-900 font-medium'>under</div>
+              <div className='lg:text-7xl text-5xl text-blue-900 font-medium'>Construction</div>
+              <div>Our Website is under construction for any queries please mail to constactus@mychoiceworld.in</div>
+            </div>
+            <div className='flex flex-col lg:h-full lg:w-2/3 h-1/3 lg:justify-center justify-start mt-10'>
+              <img src='/undraw_city_life_gnpr.svg'></img>
+            </div>
           </div>
           <div className='absolute bottom-0 flex w-full'>
             <InfiniteSlider></InfiniteSlider>
@@ -115,31 +112,31 @@ function App() {
             Copyright©2024 mychoice & Rishi Agarwal
           </div>
         </div>
-        <div className='fixed top-0 flex flex-row justify-between w-full h-fit lg:p-4 p-2 py-4 font-sans shadow-lg rounded-xl bg-white bg-no-repeat text-rose-950'>
-          <div className='flex flex-col justify-center lg:w-1/3'>
-            <a href='#' className='lg:text-xl text-2xl font-bold text-rose-800'>
+        <div className='fixed top-0 flex flex-row justify-between w-full h-fit font-sans bg-opacity-100 p-1 py-4 bg-gray-50 bg-no-repeat text-blue-900'>
+          <div className='flex flex-col justify-center lg:w-2/3 p-4'>
+            <a href='#' className='lg:text-5xl text-2xl font-bold font-sans text-blue-900'>
               MY CHOICE ELECTRONICS
             </a>
           </div>
-          <div className='hidden lg:flex flex-row space-x-4 justify-end w-2/3 px-4'>
-            {/* <div className='flex flex-col w-fit text-xl justify-center font-semibold'>
-              <a href='#contactus'>Staff Portal</a>
-            </div> */}
-            <div className='flex flex-col w-fit text-xl justify-center font-semibold'>
+          <div className='hidden lg:flex flex-row space-x-2 justify-end w-2/3 px-4'>
+            <div className='flex flex-col w-fit text-lg justify-center font-semibold hover:bg-blue-100 p-2 rounded-md'>
+              <a href='#contactus' className=''>Store Locator</a>
+            </div>
+            <div className='flex flex-col w-fit text-lg justify-center font-semibold hover:bg-blue-100 p-2 rounded-md'>
               <a href='#contactus'>Contact Us</a>
             </div>
           </div>
           <div className='lg:hidden flex flex-row justify-end'>
             <div className='flex flex-col w-fit justify-center font-semibold' onClick={() => { setIsSliderOpen(!isSliderOpen) }}>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-10 text-rose-800">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-10 text-blue-900">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25" />
               </svg>
             </div>
           </div>
-          <div className={`${isSliderOpen ? '' : 'translate-x-32'} absolute -right-0 -bottom-20 flex flex-col p-4 text-lg space-y-2 font-semibold bg-white rounded-b-lg transform transition ease-in-out delay-200`}>
-            {/* <div>
-              <a href='https://portal.mychoiceworld.in'>Staff Portal</a>
-            </div> */}
+          <div className={`${isSliderOpen ? '' : 'translate-x-36'} absolute -right-0 -bottom-20 flex flex-col p-4 text-lg space-y-2 font-semibold bg-white rounded-b-lg transform transition ease-in-out delay-200`}>
+            <div>
+              <a href='#contactus' onClick={() => { setIsSliderOpen(!isSliderOpen) }}>Store Locator</a>
+            </div>
             <div>
               <a href='#contactus' onClick={() => { setIsSliderOpen(!isSliderOpen) }}>Contact Us</a>
             </div>

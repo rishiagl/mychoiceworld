@@ -11,6 +11,8 @@ export default {
         'bgi-2': "url('/two.jpg')",
         'bgi-3': "url('/three.jpg')",
         'bgi-4': "url('/four.jpg')",
+        'bgi-5': "url('/sym.webp')",
+        'bgi-6': "url('/bajaj2.webp')",
         'bgh': "url('/bgh.jpg')",
         'logo-lg': "url('/logo/lg.png')",
         'logo-samsung': "url('/logo/samsung.png')",
