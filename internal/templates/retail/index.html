@@ -1,0 +1,86 @@
+{% extends "retail/base.html" %}
+{% block content %}
+<div class="flex flex-col h-full w-screen lg:max-w-sm p-2 space-y-4 justify-between text-xl font-bold text-gray-700">
+    <div class="flex flex-row h-fit w-full space-x-1 px-3 text-sm font-bold italic">
+        <div class="flex w-full justify-start italic">RETAIL, FY 24-25</div>
+        <div class="flex w-full justify-end">
+            <p id="datetime"></p>
+        </div>
+    </div>
+    <div>
+    </div>
+    <div class="flex w-full h-1/4">
+        <canvas id="myChart"></canvas>
+    </div>
+    <div class="flex flex-col space-y-1 p-1 font-semibold text-sm">
+        <div class="text-orange-500">
+            Invoices Pending Over 30 Days: {{pending_over_30_count}}
+        </div>
+        <div class="text-orange-700">
+            Invoices Pending Over 60 Days: {{pending_over_60_count}}
+        </div>
+    </div>
+    <div class="flex flex-col h-3/5 space-y-3 italic">
+        <div class="flex justify-center h-full w-full rounded-lg shadow-md bg-amber-400">
+            <a class="flex flex-col justify-center h-full w-full" href="/retail/sales_invoice">
+                <div class="flex justify-center italic">
+                    Sales Invoice
+                </div>
+            </a>
+        </div>
+        <div class="flex justify-center h-full w-full rounded-lg shadow-md bg-sky-400">
+            <a class="flex flex-col justify-center h-full w-full" href="/retail/price_list">
+                <div class="flex justify-center italic">
+                    Price List
+                </div>
+            </a>
+        </div>
+        <div class="flex justify-center h-full w-full rounded-lg shadow-md bg-purple-400">
+            <a class="flex flex-col justify-center h-full w-full" href="/retail/ledger">
+                <div class="flex justify-center">
+                    Ledger
+                </div>
+            </a>
+        </div>
+        <div class="flex justify-center h-full w-full rounded-lg shadow-md bg-green-400">
+            <a class="flex flex-col justify-center h-full w-full" href="/retail/reports">
+                <div class="flex justify-center">
+                    Reports
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var currentdate = new Date();
+    document.getElementById("datetime").innerHTML = currentdate.getHours() + ":" + currentdate.getMinutes() + ", " + currentdate.getDate() + "/" + (currentdate.getMonth() + 1) + "/" + currentdate.getFullYear()
+
+
+    const ctx = document.getElementById('myChart');
+    let order_count = '{{order_count}}'
+    order_count = order_count.replace('[', "")
+    order_count = order_count.replace(']', "")
+    order_count = order_count.split(',')
+    console.log(order_count)
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['30', '25', '20', '15', '10', '5'],
+            datasets: [{
+                label: 'Order Count',
+                data: order_count,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}
