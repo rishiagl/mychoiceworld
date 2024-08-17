@@ -1,4 +1,5 @@
 {% extends "flipkart/base.html" %}
+{%load static%}
 {% block content %}
 <div class="flex flex-col w-screen lg:max-w-sm justify-center p-2 text-lg font-bold space-y-6">
     {% if error_message %}
@@ -21,20 +22,38 @@
         {{normal_message}}
     </div>
     {% endif %}
-    <div class="relative flex flex-col border-2 border-sky-500 rounded-md p-2 pt-8">
-        <form id="payment_form" method="post">
+    <div class="relative flex flex-col h-full">
+        <form id="payment_form" method="post" class="flex h-full">
             {% csrf_token %}
-            <div
+            <!-- <div
                 class="absolute -top-5 left-2 justify-center bg-white text-sky-700 p-2 border-2 rounded-xl border-sky-500">
                 <p id="step"></p>
-            </div>
-            <div class="tab hidden flex flex-col p-4 w-full text-sky-700">
-                <label>Enter Order ID:</label>
+            </div> -->
+            <div class="tab hidden flex flex-col justify-center p-4 w-full h-full text-blue-900 bg-cover bg-no-repeat bg-center space-y-2"
+                style="background-image: url({% static "/flipkart/order_image.svg" %});">
+                <label class="text-2xl">Enter Order ID:</label>
                 <input type="text" id="order_id" name="order_id"
-                    class="flex w-full appearance-none border-2 border-sky-500 rounded-md accent-sky-500" required>
+                    class="flex w-full appearance-none border-2 border-blue-900 rounded-md accent-blue-900" required>
+                <div class="flex justify-start">
+                    <button
+                        class="flex p-2 text-blue-900 border-2 border-blue-900 w-full justify-between rounded text-xl hover:shadow-xl"
+                        onclick="nextPrev(1)">Next<span class="flex flex-col justify-center"><svg
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1"
+                                stroke="white" class="size-8">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                            </svg>
+                        </span></button>
+                </div>
+                <div class="absolute bottom-4 left-2 text-7xl space-y-4 italic text-blue-900 font-thin">
+                    <div>
+                        <div>Accept</div>
+                        <div>Payment</div>
+                    </div>
+                </div>
             </div>
-            <div class="tab hidden flex flex-col justify-center w-full space-y-4 p-2 text-sky-800 transition transform ease-in-out delay-500">
-                <p id="display_order_id" class="flex justify-center">OD22222222222222222222222</p>
+            <div class="tab hidden flex flex-col justify-start w-full h-full text-blue-900 bg-cover bg-no-repeat bg-right space-y-2 transition transform ease-in-out delay-500" style="background-image: url({% static "/flipkart/payment_image2.svg" %});">
+                <p id="display_order_id" class="flex justify-center bg-white">OD22222222222222222222222</p>
                 <div class="flex w-full justify-center">
                     <label class="flex flex-col p-2 justify-center">Amount:</label>
                     <input type="number" id="final_settlement" name="final_settlement" class="flex w-full p-4 justify-center rounded-md border-2 border-sky-500 " required>
@@ -44,14 +63,19 @@
                         onclick="nextPrev(-1)">
                         Back
                     </button>
-                    <button type="submit" value="submit" class="flex p-2  border-2 border-sky-500 rounded hover:bg-sky-200" onclick="nextprev(1)">Submit</button>
+                    <button type="submit" value="submit" class="flex p-2 border-2 border-blue-900 rounded hover:bg-blue-100" onclick="nextprev(1)">Submit</button>
+                </div>
+                <div class="absolute top-56 text-5xl space-y-4 italic text-blue-900 font-thin">
+                    <div>
+                        <div>Enter</div>
+                        <div>Amount</div>
+                    </div>
                 </div>
             </div>
         </form>
     </div>
 </div>
 <script>
-    document.getElementById("order_id").addEventListener('input', OrderIdHandler)
     var tab = document.getElementsByClassName("tab");
     var currentTab = 0;
     showTab(currentTab);
@@ -63,6 +87,8 @@
     }
 
     function nextPrev(n) {
+        order_id = document.getElementById("order_id");
+        document.getElementById("display_order_id").innerHTML = order_id.value
         var x = document.getElementsByClassName("tab");
 
         x[currentTab].classList.add("hidden");
@@ -77,16 +103,6 @@
     function fixStepIndicator(n) {
         var x = document.getElementById("step");
         x.innerHTML = "Step " + (currentTab + 1) + " of " + tab.length;
-    }
-
-    function OrderIdHandler() {
-        order_id = document.getElementById("order_id");
-        if (order_id.value.length == 20) {
-            document.getElementById("display_order_id").innerHTML = order_id.value
-            nextPrev(1)
-            return false;
-        }
-        return false;
     }
 </script>
 {% endblock %}
