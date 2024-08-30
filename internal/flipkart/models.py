@@ -12,7 +12,7 @@ DeliveryStatus = (
 ShipmentType = (
     ('NORMAL', 'No Return'),
     ('COURIER', 'Courier Return'),
-    ('CUsTOMER', 'Customer Return'),
+    ('CUSTOMER', 'Customer Return'),
 )
 
 

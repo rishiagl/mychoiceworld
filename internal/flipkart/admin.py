@@ -34,7 +34,7 @@ def mark_as_courier_return(modeladmin, request, queryset):
         request, f"{updated_count} orders marked as Courier Return.")
     
 def mark_as_customer_return(modeladmin, request, queryset):
-    updated_count = queryset.update(shipment_type='CUsTOMER')
+    updated_count = queryset.update(shipment_type='CUSTOMER')
     modeladmin.message_user(
         request, f"{updated_count} orders marked as Customer Return.")
 
