@@ -38,6 +38,7 @@ class OrderModel(admin.ModelAdmin):
 
     search_fields = ("order_id", "tracking_id")
     actions = [mark_as_delivered]
+    ordering = ('-order_date',)
 
     list_filter = (ReadOnlyVariableFilter, 'shipment_type', 'delivery_status')
 
