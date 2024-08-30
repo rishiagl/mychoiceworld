@@ -21,21 +21,23 @@ def index(request):
     order_count = [Order.objects.filter(order_date__range=(d5_ago, today)).count(), Order.objects.filter(order_date__range=(d10_ago, d5_ago)).count(), Order.objects.filter(order_date__range=(d15_ago, d10_ago)).count(
     ), Order.objects.filter(order_date__range=(d20_ago, d15_ago)).count(), Order.objects.filter(order_date__range=(d25_ago, d20_ago)).count(), Order.objects.filter(order_date__range=(d30_ago, d25_ago)).count()][::-1]
 
-    pending_over_30_list = Order.objects.filter(
-        order_date__range=(d60_ago, d30_ago))
-    pending_over_30_count = 0
-    for order in pending_over_30_list:
-        if order.pending == 'YES':
-            pending_over_30_count = pending_over_30_count + 1
-
     pending_over_60_list = Order.objects.filter(
         order_date__range=(d999_ago, d60_ago))
     pending_over_60_count = 0
     for order in pending_over_60_list:
         if order.pending == 'YES':
             pending_over_60_count = pending_over_60_count + 1
+            
+    total_orders = Order.objects.count()
+    total_courier_returns = Order.objects.filter(shipment_type='COURIER').count()
+    total_customer_returns = Order.objects.filter(shipment_type='CUSTOMER').count()
+    
+    customer_return_orders = Order.objects.filter(shipment_type='CUSTOMER')
+    customer_return_amount_total = 0
+    for order in customer_return_orders :
+        customer_return_amount_total = customer_return_amount_total + order.final_settlement
 
-    return render(request, "flipkart/index.html", {"order_count": order_count, "pending_over_30_count": pending_over_30_count, "pending_over_60_count": pending_over_60_count})
+    return render(request, "flipkart/index.html", {"order_count": order_count, "pending_over_60_count": pending_over_60_count, "total_orders": total_orders, "total_courier_returns": total_courier_returns, "total_customer_returns": total_customer_returns, "customer_return_amount_total": customer_return_amount_total})
 
 
 @login_required(login_url="/admin/login/?next=/flipkart/dispatch")
