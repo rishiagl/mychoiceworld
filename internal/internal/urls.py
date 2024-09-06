@@ -28,6 +28,5 @@ urlpatterns = [
     path('catalog/', include("catalog.urls")),
     path('flipkart/', include("flipkart.urls")),
     path('retail/', include("retail.urls")),
-    path('registrar/', include("registrar.urls")),
     path('admin/', admin.site.urls),
 ]
