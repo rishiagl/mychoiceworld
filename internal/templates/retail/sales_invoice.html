@@ -1,0 +1,524 @@
+{% extends "retail/base.html" %}
+{%load static%}
+{% block content %}
+<div class="flex flex-col w-screen lg:max-w-sm justify-center text-lg font-bold space-y-2">
+    {% if error_message %}
+    <div class="info flex w-full bg-red-600 text-white rounded p-2">
+        {{error_message}}
+    </div>
+    {% endif %}
+    {% if warning_message %}
+    <div class="info flex w-full bg-yellow-600 text-white rounded p-2">
+        {{warning_message}}
+    </div>
+    {% endif %}
+    {% if success_message %}
+    <div class="info flex w-full bg-green-600 text-white rounded p-2">
+        {{success_message}}
+    </div>
+    {% endif %}
+    {% if normal_message %}
+    <div class="info flex w-full bg-slate-600 text-white rounded p-2">
+        {{normal_message}}
+    </div>
+    {% endif %}
+    {% if invoice_download_link %}
+    <div class="info flex w-full bg-sky-600 text-white rounded p-2 text-sm">
+        Your file should be downloading. If not, <a id="dl-app" href="{{invoice_download_link}}" download>click
+            here</a>.
+    </div>
+    {% endif %}
+    <div class="relative flex flex-col h-full w-full font-medium">
+        <form id="invoice_form" method="post" class="flex h-full">
+            {% csrf_token %}
+            <div class="tab hidden flex flex-col p-2 justify-end w-full h-full text-slate-900 bg-cover bg-right space-y-2"
+                style="background-image: url({% static " /retail/select_image5.svg" %});">
+                <input id="merchant" name="merchant" class="hidden" required>
+                <div class="flex flex-col px-2 w-full space-y-2 text-slate-900 font-medium text-4xl font-serif italic">
+                    <p id="display_order_id" class="flex justify-end">Date</p>
+                    <p id="display_order_id" class="flex justify-end">&</p>
+                    <p id="display_order_id" class="flex justify-end">Merchant</p>
+                </div>
+                <div class="flex w-full justify-end hover:shadow-2xl">
+                    <input id="invoice_date" type="date" name="invoice_date" class="rounded-lg" required>
+                </div>
+                {% for merchant in merchants %}
+                <div class="flex w-full justify-center hover:shadow-2xl">
+                    <button onclick="return changeMerchantTo('{{merchant}}')"
+                        class="flex w-full p-4 justify-end rounded-md border-2 border-slate-900 ">
+                        {{merchant}}
+                    </button>
+                </div>
+                {% empty %}
+                <div class="flex justify-end text-rose-500 py-8">Some Error Occured!</div>
+                {% endfor %}
+                <div class="absolute top-4 right-2 text-7xl space-y-4 italic text-blue-900">
+                    <div>
+                        <div>Sales</div>
+                        <div>Invoice</div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab hidden flex flex-col p-2 justify-center w-full h-full text-slate-900 bg-no-repeat bg-cover bg-left space-y-4 transition transform ease-in-out delay-500"
+                style="background-image: url({% static " /retail/customer_ph_no2.svg" %});">
+                <div class="flex flex-col w-full space-y-2 text-slate-900 font-medium text-4xl font-serif italic">
+                    <p id="display_order_id" class="flex justify-start">Customer Details</p>
+                </div>
+                <div class="flex flex-col space-y-4 pt-2">
+                    <div class="relative w-full">
+                        <input id="customer_phone_number" name="customer_phone_number" type="text" value=""
+                            class="flex w-full rounded-lg border-2 border-slate-900 p-2 text-4xl bg-white bg-opacity-70"
+                            maxlength="10">
+                        <div class="absolute -top-4 left-2 bg-white rounded-lg  text-sm font-medium p-1">
+                            Phone No</div>
+                    </div>
+
+                    <div class="relative w-full">
+                        <input id="customer_name" name="customer_name" type="text"
+                            class="flex w-full rounded-lg border-2 border-slate-900 p-2 text-4xl bg-white bg-opacity-70"
+                            maxlength="20">
+                        <div class="absolute -top-4 left-2 bg-white rounded-lg  text-sm font-medium p-1">
+                            Name</div>
+                    </div>
+
+                    <div class="relative">
+                        <input id="address_line_1" name="address_line_1" type="text" value=""
+                            class="flex w-full rounded-lg border-2 border-slate-900 p-2 text-4xl bg-white bg-opacity-70"
+                            maxlength="30" required>
+                        <div class="absolute -top-4 left-2 rounded-lg bg-white text-sm font-medium p-1">
+                            Address Line 1</div>
+                    </div>
+                    <div class="relative">
+                        <input id="address_line_2" name="address_line_2" type="text" value=""
+                            class="flex w-full rounded-lg border-2 border-slate-900 p-2 text-4xl bg-white bg-opacity-70"
+                            maxlength="30" required>
+                        <div class="absolute -top-4 left-2 rounded-lg bg-white text-sm font-medium p-1">
+                            Address Line 2</div>
+                    </div>
+                    <div class="relative w-2/3">
+                        <input id="address_pincode" name="address_pincode" type="text" value=""
+                            class="flex w-full rounded-lg border-2 border-slate-900 p-2 text-4xl bg-white bg-opacity-70"
+                            maxlength="20" required>
+                        <div class="absolute -top-4 left-2 rounded-lg bg-white text-sm font-medium p-1">
+                            pincode</div>
+                    </div>
+
+                </div>
+                <div class="flex justify-between space-x-2">
+                    <button onclick="return nextPrev(-1)"
+                        class="flex p-4 border-2 border-slate-900 text-slate-900 font-thin rounded-xl text-3xl">Back<span
+                            class="flex flex-col justify-center">
+                        </span></button>
+                    <button onclick="return nextPrev(1)"
+                        class="flex p-4 border-2 border-white bg-slate-900 text-white font-thin rounded-xl text-3xl">Next<span
+                            class="flex flex-col justify-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-10">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                            </svg>
+                        </span></button>
+                </div>
+            </div>
+            <div class="tab hidden flex flex-col p-2 justify-center w-full h-full text-slate-900 bg-no-repeat bg-cover bg-bottom-left space-y-2 transition transform ease-in-out delay-500"
+                style="background-image: url({% static " /retail/customer_ph_no2.svg" %});">
+                <div class="flex flex-row space-x-2 w-full text-slate-900 font-medium text-4xl font-serif italic">
+                    <p id="display_order_id" class="flex justify-start">Product</p>
+                    <p id="display_order_id" class="flex justify-start">Details</p>
+                </div>
+                <div class="relative flex flex-col">
+                    <label for="product_category" class="font-medium">Product Category:</label>
+
+                    <select name="product_category" id="product_category" class="flex rounded-lg w-full">
+                        {% for product_category in product_categories %}
+                        <option value="{{product_category}}">{{product_category}}</option>
+                        {% empty %}
+                        <option value="empty">Some Error Occured!</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="flex flex-col space-y-6 pt-4">
+                    <div class="relative">
+                        <input id="product_name" name="product_name" type="text" value=""
+                            class="flex w-full rounded-lg border-2 border-slate-900 p-2 text-4xl bg-white bg-opacity-70"
+                            maxlength="50" required>
+                        <div class="absolute -top-4 left-2 bg-white rounded-lg text-sm font-medium p-1">
+                            Product Name</div>
+                    </div>
+                    <div class="relative">
+                        <input id="product_serial_no" name="product_serial_no" type="text" value=""
+                            class="flex w-full rounded-lg border-2 border-slate-900 p-2 text-4xl bg-white bg-opacity-70"
+                            maxlength="20" required>
+                        <div class="absolute -top-4 left-2 bg-white rounded-lg text-sm font-medium p-1">
+                            Serial Number</div>
+                    </div>
+                    <div class="relative w-2/3">
+                        <input id="product_amount" name="product_amount" type="text" value=""
+                            class="flex w-full rounded-lg border-2 border-slate-900 p-2 text-4xl bg-white bg-opacity-70"
+                            maxlength="20" required>
+                        <div class="absolute -top-4 left-2 bg-white rounded-lg text-sm font-medium p-1">
+                            Amount</div>
+                    </div>
+                </div>
+                <div class="flex justify-between space-x-2">
+                    <button onclick="return nextPrev(-1)"
+                        class="flex p-4 border-2 border-slate-900 text-slate-900 font-thin rounded-xl text-3xl">Back<span
+                            class="flex flex-col justify-center">
+                        </span></button>
+                    <button onclick="return nextPrev(1)"
+                        class="flex p-4 border-2 border-white bg-slate-900 text-white font-thin rounded-xl text-3xl">Next<span
+                            class="flex flex-col justify-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-10">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                            </svg>
+                        </span></button>
+                </div>
+            </div>
+            <div class="tab hidden flex flex-col p-2 justify-center w-full h-full text-slate-900 bg-no-repeat bg-cover bg-bottom-left space-y-2 transition transform ease-in-out delay-500"
+                style="background-image: url({% static " /retail/customer_ph_no2.svg" %});">
+                <div class="flex flex-row w-full space-x-2 text-slate-900 font-medium text-4xl font-serif italic">
+                    <p id="display_order_id" class="flex justify-start">Finance</p>
+                    <p id="display_order_id" class="flex justify-start">Details</p>
+                </div>
+                <div class="relative flex flex-col">
+                    <label for="finance_company" class="font-medium">Finance Company:</label>
+
+                    <select name="finance_company" id="finance_company" class="flex rounded-lg w-full">
+                        {% for finance_company in finance_companies %}
+                        <option value="{{finance_company}}">{{finance_company}}</option>
+                        {% empty %}
+                        <option value="empty">Some Error Occured!</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="flex flex-col space-y-6 pt-4">
+                    <div class="flex flex-row justify-between space-x-2">
+                        <div class="relative w-3/5">
+                            <input id="finance_emi" name="finance_emi" type="number" value=""
+                                class="flex w-full rounded-lg border-2 border-slate-900 p-2 text-5xl bg-white bg-opacity-70"
+                                maxlength="20">
+                            <div class="absolute -top-4 left-2 bg-white rounded-lg text-sm font-medium p-1">
+                                EMI</div>
+                        </div>
+                        <div class="relative w-1/3">
+                            <input id="finance_months" name="finance_months" type="number" value=""
+                                class="flex w-full rounded-lg border-2 border-slate-900 p-2 text-5xl bg-white bg-opacity-70"
+                                maxlength="20">
+                            <div class="absolute -top-4 left-2 bg-white rounded-lg  text-sm font-medium p-1">
+                                Months</div>
+                        </div>
+                    </div>
+
+                    <div class="relative w-2/3">
+                        <input id="finance_down_payment" name="finance_down_payment" type="number" value=""
+                            class="flex w-full rounded-lg border-2 border-slate-900 p-2 text-5xl bg-white bg-opacity-70"
+                            maxlength="20">
+                        <div class="absolute -top-4 left-2 bg-white rounded-lg  text-sm font-medium p-1">
+                            Down Payment</div>
+                    </div>
+
+                </div>
+                <div class="flex justify-between space-x-2">
+                    <button onclick="return nextPrev(-1)"
+                        class="flex p-4 border-2 bg-white border-slate-900 text-slate-900 font-thin rounded-xl text-3xl">Back<span
+                            class="flex flex-col justify-center">
+                        </span></button>
+                    <button onclick="return nextPrev(1)"
+                        class="flex p-4 border-2 border-white bg-slate-900 text-white font-thin rounded-xl text-3xl">Next<span
+                            class="flex flex-col justify-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="size-10">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                            </svg>
+                        </span></button>
+                </div>
+            </div>
+            <div class="tab hidden flex flex-col p-2 justify-center w-full h-full text-slate-900 bg-no-repeat bg-cover bg-bottom-left space-y-5 transition transform ease-in-out delay-500"
+                style="background-image: url({% static " /retail/customer_ph_no2.svg" %});">
+                <div class="flex flex-row space-x-2 w-full text-slate-900 font-medium text-4xl font-serif italic">
+                    <!-- <p id="display_order_id" class="flex justify-start">Enter</p> -->
+                    <p id="display_order_id" class="flex justify-start">Payment</p>
+                    <p id="display_order_id" class="flex justify-start">Details</p>
+                </div>
+                <div class="flex flex-row ">
+                    <div class="flex flex-col justify-center rounded-lg text-2xl font-medium p-1 w-2/5">
+                        Cash</div>
+                    <input id="cash_payment" name="cash_payment" type="number" value=""
+                        class="flex w-3/5 rounded-lg border-2 border-slate-900 p-2 text-2xl bg-white bg-opacity-70"
+                        maxlength="20">
+                </div>
+                <div class="flex flex-row ">
+                    <div class="flex flex-col justify-center rounded-lg text-2xl font-medium p-1 w-2/5">
+                        UPI</div>
+                    <input id="upi_payment" name="upi_payment" type="number" value=""
+                        class="flex w-3/5 rounded-lg border-2 border-slate-900 p-2 text-2xl bg-white bg-opacity-70"
+                        maxlength="20">
+                </div>
+                <div class="flex flex-row ">
+                    <div class=" flex flex-col justify-center rounded-lg text-2xl font-medium p-1 w-2/5">
+                        Debit Card</div>
+                    <input id="debit_card_payment" name="debit_card_payment" type="number" value=""
+                        class="flex w-3/5 rounded-lg border-2 border-slate-900 p-2 text-2xl bg-white bg-opacity-70"
+                        maxlength="20">
+                </div>
+                <div class="flex flex-row ">
+                    <div class=" flex flex-col justify-center rounded-lg text-2xl font-medium p-1 w-2/5">
+                        Credit Card</div>
+                    <input id="credit_card_payment" name="credit_card_payment" type="number" value=""
+                        class="flex w-3/5 rounded-lg border-2 border-slate-900 p-2 text-2xl bg-white bg-opacity-70"
+                        maxlength="20">
+                </div>
+                <div class="flex flex-row ">
+                    <div class="flex flex-col justify-center rounded-lg text-2xl font-medium p-1 w-2/5">
+                        Net Banking</div>
+                    <input id="net_banking_payment" name="net_banking_payment" type="number" value=""
+                        class="flex w-3/5 rounded-lg border-2 border-slate-900 p-2 text-2xl bg-white bg-opacity-70"
+                        maxlength="20">
+                </div>
+                <!-- <div class="flex flex-row ">
+                    <div class="flex flex-col justify-center rounded-lg text-2xl font-medium p-1 w-2/5">
+                        Discount</div>
+                    <input id="discount" name="discount" type="number" value=""
+                        class="flex w-3/5 rounded-lg border-2 border-slate-900 p-2 text-2xl bg-white bg-opacity-70"
+                        maxlength="20">
+                </div> -->
+                <div class="flex flex-row ">
+                    <div class="flex flex-col justify-center rounded-lg text-2xl font-medium p-1 w-2/5">
+                        Exchange</div>
+                    <input id="exchange_value" name="exchange_value" type="number" value=""
+                        class="flex w-3/5 rounded-lg border-2 border-slate-900 p-2 text-2xl bg-white bg-opacity-70"
+                        maxlength="20">
+                </div>
+                <div class="flex justify-between space-x-2">
+                    <button onclick="return nextPrev(-1)"
+                        class="flex p-4 bg-white border-2 border-slate-900 text-slate-900 font-thin rounded-xl text-3xl">Back<span
+                            class="flex flex-col justify-center">
+                        </span></button>
+                    <button onclick="return generateSummary()"
+                        class="flex p-4 border-2 border-white bg-slate-900 text-white font-thin rounded-xl text-3xl">Generate
+                        Summary
+
+                    </button>
+                </div>
+            </div>
+            <div class="tab hidden flex flex-col p-2 justify-between w-full h-full text-slate-900 bg-no-repeat bg-cover bg-bottom-left space-y-2 transition transform ease-in-out delay-500"
+                style="background-image: url({% static " /retail/customer_ph_no2.svg" %});">
+                <div
+                    class="flex flex-row justify-center w-full space-x-2 text-slate-900 font-medium text-4xl font-serif italic">
+                    <p id="display_order_id" class="flex justify-start">Invoice</p>
+                    <p id="display_order_id" class="flex justify-start">Summary</p>
+                </div>
+                <div
+                    class="flex flex-col p-1 bg-slate-50 rounded-lg bg-opacity-70 text-lg font-normal space-y-2 lg:text-sm">
+                    <div class="flex flex-row p-1  justify-between border-2 border-sky-500 shadow-md rounded">
+                        <div id="sm-m-a">Rajesh Agarwal</div>
+                        <div id="sm-date">25/08/24</div>
+                    </div>
+                    <div class="flex flex-row justify-between space-x-2">
+                        <div class="flex flex-col w-1/2 p-1 border-2 border-sky-500 shadow-md rounded">
+                            <div id="sm-c-name" class="flex justify-center">Rishi Agarwal</div>
+                            <div id="sm-c-ph-no" class="flex justify-center">7970460076</div>
+                            <div id="sm-c-a-l-1" class="flex justify-center">Hume Pipe</div>
+                            <div id="sm-c-a-l-2" class="flex justify-center">Nirmal Nagar</div>
+                            <div id="sm-c-a-pc" class="flex justify-center">831001</div>
+                        </div>
+                        <div class="flex flex-col w-1/2 p-1 border-2 border-sky-500 shadow-md rounded">
+                            <div id="sm-p-n" class="flex justify-center truncate">Voltas REF 205Ltr 205DDRC</div>
+                            <div id="sm-p-c" class="flex justify-center">Refriderator</div>
+                            <div id="sm-p-s-n" class="flex justify-center">123bi23489982</div>
+                            <!-- <div class="flex flex-row justify-between"> -->
+                            <div class="flex justify-center">Amt: <span id="sm-amount">20000</span></div>
+                            <div class="flex justify-center">Due: <span id="sm-due">20000</span></div>
+                            <!-- </div> -->
+                        </div>
+                    </div>
+                    <div class="flex flex-row justify-between space-x-2">
+                        <div
+                            class="flex flex-col w-1/2 justify-between space-y-1 p-1 border-2 border-sky-500 rounded shadow">
+                            <div class="flex justify-center">Payment Details</div>
+                            <div class="flex flex-row justify-between w-full">
+                                <div>Cash</div>
+                                <div id="sm-pd-c">5000</div>
+                            </div>
+                            <div class="flex flex-row justify-between">
+                                <div>UPI</div>
+                                <div id="sm-pd-upi">5000</div>
+                            </div>
+                            <div class="flex flex-row justify-between">
+                                <div>Debit Card</div>
+                                <div id="sm-pd-dc">5000</div>
+                            </div>
+                            <div class="flex flex-row justify-between">
+                                <div>Credit Card</div>
+                                <div id="sm-pd-cc">5000</div>
+                            </div>
+                            <div class="flex flex-row justify-between">
+                                <div>Net Banking</div>
+                                <div id="sm-pd-nb">5000</div>
+                            </div>
+                            <div class="flex flex-row justify-between">
+                                <div>Total</div>
+                                <div id="sm-pd-t">20000</div>
+                            </div>
+                        </div>
+                        <div
+                            class="flex flex-col w-1/2 justify-between space-y-1 p-1 border-2 border-sky-500 rounded shadow">
+                            <div class="flex justify-center">Other Details</div>
+                            <div class="flex flex-row justify-between space-x-1">
+                                <div>Financer</div>
+                                <div id="sm-od-f-n" class="truncate">Bajaj Finance Ltd</div>
+                            </div>
+                            <div class="flex flex-row justify-between">
+                                <div>Down Payment</div>
+                                <div id="sm-od-f-dp">5000</div>
+                            </div>
+                            <div class="flex flex-row justify-between">
+                                <div>EMI</div>
+                                <div id="sm-od-f-emi">5000</div>
+                            </div>
+                            <div class="flex flex-row justify-between">
+                                <div>Duration(in Months)</div>
+                                <div id="sm-od-f-d">5</div>
+                            </div>
+                            <div class="flex flex-row justify-between">
+                                <div>Exchange Value</div>
+                                <div id="sm-od-ex-v">5000</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-end space-y-2">
+                    <div>Please Click Below to Confirm and Generate Invoice.</div>
+                    <button type="submit"
+                        class="flex justify-center p-4 border-2 border-white bg-slate-900 text-white font-thin rounded-xl text-3xl">Generate
+                        Invoice
+                    </button>
+                    <button onclick="return nextPrev(-1)"
+                        class="flex justify-center p-4 border-2 border-slate-900 bg-slate-100 text-slate-900 font-thin rounded-xl text-3xl">Back
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    document.getElementById('invoice_date').valueAsDate = new Date();
+    setTimeout(function () {
+        x = document.getElementsByClassName("info");
+
+        for (y = 0; y < x.length; y++) {
+            x[y].classList.add("hidden");
+        }
+    }, 3000)
+    window.addEventListener('load', function (event) {
+        document.getElementById('dl-app').click();
+    })
+    var tab = document.getElementsByClassName("tab");
+    var currentTab = 0;
+    showTab(currentTab);
+
+    function showTab(n) {
+        // This function will display the specified tab of the form ...
+        var x = document.getElementsByClassName("tab");
+        x[n].classList.remove("hidden");
+        return false;
+    }
+
+    function nextPrev(n) {
+        var x = document.getElementsByClassName("tab");
+        if (n == 1 && !validateForm()) return false;
+        x[currentTab].classList.add("hidden");
+        // Increase or decrease the current tab by 1:
+        currentTab = currentTab + n;
+        // if you have reached the end of the form... :
+        if (currentTab > x.length) {
+            //...the form gets submitted:
+            document.getElementById("invoice_form").submit();
+            return false;
+        }
+        // Otherwise, display the correct tab:
+        return showTab(currentTab);
+    }
+
+    function validateForm() {
+        // This function deals with validation of the form fields
+        var x, y, i, valid = true;
+        x = document.getElementsByClassName("tab");
+        y = x[currentTab].getElementsByTagName("input");
+        // A loop that checks every input field in the current tab:
+        for (i = 0; i < y.length; i++) {
+            // If a field is empty...
+            if (y[i].value == "") {
+                // add an "invalid" class to the field:
+                y[i].classList.add("border-red-500");
+                // and set the current valid status to false
+                valid = false;
+            }
+            else {
+                y[i].classList.add("border-teal-500");
+            }
+        }
+        return valid; // return the valid status
+    }
+
+    function changeMerchantTo(value) {
+        document.getElementById("merchant").value = value;
+        nextPrev(1);
+        return false;
+    }
+
+    function generateSummary() {
+        nextPrev(1);
+        var total_amount_paid = parseInt(document.getElementById("cash_payment").value) + parseInt(document.getElementById("upi_payment").value) + parseInt(document.getElementById("debit_card_payment").value) + parseInt(document.getElementById("credit_card_payment").value) + parseInt(document.getElementById("net_banking_payment").value) + parseInt(document.getElementById("exchange_value").value);
+        if (document.getElementById("finance_company").value != "No Finance") {
+            total_amount_paid += parseInt(document.getElementById("product_amount").value) - parseInt(document.getElementById("finance_down_payment").value);
+        }
+        document.getElementById("sm-c-name").innerHTML = document.getElementById("customer_name").value;
+        document.getElementById("sm-c-ph-no").innerHTML = document.getElementById("customer_phone_number").value;
+        document.getElementById("sm-c-a-l-1").innerHTML = document.getElementById("address_line_1").value;
+        document.getElementById("sm-c-a-l-2").innerHTML = document.getElementById("address_line_2").value;
+        document.getElementById("sm-c-a-pc").innerHTML = document.getElementById("address_pincode").value;
+        document.getElementById("sm-m-a").innerHTML = document.getElementById("merchant").value;
+        document.getElementById("sm-date").innerHTML = document.getElementById('invoice_date').value;
+        document.getElementById("sm-amount").innerHTML = document.getElementById("product_amount").value;
+        document.getElementById("sm-due").innerHTML = document.getElementById("product_amount").value - total_amount_paid;
+        document.getElementById("sm-p-n").innerHTML = document.getElementById("product_name").value;
+        document.getElementById("sm-p-c").innerHTML = document.getElementById("product_category").value;
+        document.getElementById("sm-p-s-n").innerHTML = document.getElementById("product_serial_no").value;
+        document.getElementById("sm-pd-c").innerHTML = document.getElementById("cash_payment").value;
+        document.getElementById("sm-pd-upi").innerHTML = document.getElementById("upi_payment").value;
+        document.getElementById("sm-pd-dc").innerHTML = document.getElementById("debit_card_payment").value;
+        document.getElementById("sm-pd-cc").innerHTML = document.getElementById("credit_card_payment").value;
+        document.getElementById("sm-pd-nb").innerHTML = document.getElementById("net_banking_payment").value;
+        document.getElementById("sm-pd-t").innerHTML = total_amount_paid - parseInt(document.getElementById("exchange_value").value);
+        document.getElementById("sm-od-f-n").innerHTML = document.getElementById("finance_company").value;
+        document.getElementById("sm-od-f-dp").innerHTML = document.getElementById("finance_down_payment").value;
+        document.getElementById("sm-od-f-emi").innerHTML = document.getElementById("finance_emi").value;
+        document.getElementById("sm-od-f-d").innerHTML = document.getElementById("finance_months").value;
+        document.getElementById("sm-od-ex-v").innerHTML = document.getElementById("exchange_value").value;
+        return false;
+    }
+
+    async function getData() {
+        const url = "/registrar/customer/7970460076";
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+
+            const json = await response.json();
+            if (json == []) {
+                nextPrev(1)
+            }
+            else {
+                nextPrev(3)
+            }
+            console.log(json);
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+
+</script>
+{% endblock %}

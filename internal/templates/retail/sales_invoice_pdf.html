@@ -1,0 +1,219 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>My Choice Staff Portal</title>
+    <link rel="icon" type="image/png" href="{% static " /favicon-16x16.png" %}" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.tailwindcss.com"></script>
+    {% tailwind_css %}
+</head>
+
+<body class="grid min-h-screen place-items-center bg-gray-900 print:min-h-0 font-serif text-xs text-black">
+    <main
+        class="m-4 h-[280mm] w-[210mm] overflow-hidden rounded-md bg-white p-6 shadow-lg print:m-0 print:w-screen print:rounded-none print:shadow-none">
+        <div
+            class="flex flex-col justify-start w-full h-full space-y-4 rounded p-4 px-7 border-2 border-slate-900 font-sans text-sm">
+
+            <!--Header Section-->
+            <div class="flex flex-col p-2 justify-center font-sans border-b-2 border-slate-900">
+                <div class="flex justify-center text-4xl font-bold font-serif">MY CHOICE ELECTRONICS</div>
+                <div class="flex flex-col justify-center font-medium">
+                    <div class="flex justify-center">Sakchi, Jamshedpur, Jharkhand - 831001</div>
+                    <div class="flex justify-center">Email: mychoice_jamshedpur@rediffmail.com, Ph
+                        No: +91 9334638328</div>
+                    <div class="flex justify-center">GSTN: 20AEYPA0067P1ZB, Website:
+                        www.mychoiceworld.in</div>
+                </div>
+            </div>
+
+            <div class="flex flex-row space-x-4">
+                <div class="flex flex-row w-2/3 p-2 space-x-2 border-2 border-slate-900 rounded">
+                    <div class="flex flex-col w-1/2 space-y-1">
+                        <div class="font-medium border-b-2 border-slate-900 pb-1">Customer Details:</div>
+                        <div>{{invoice.customer_name}}</div>
+                        <div>{{invoice.customer_address_line_1}}, {{invoice.customer_address_line_2}} -
+                            {{invoice.customer_pincode}}</div>
+                        <div>{{invoice.customer_phone_number}}</div>
+                    </div>
+                    <div class="flex flex-col w-1/2 space-y-1">
+                        <div class="font-medium border-b-2 border-slate-900 pb-1">Merchant Details:</div>
+                        <div>{{invoice.merchant.name}}</div>
+                        <div>{{invoice.merchant.address_line_1}}, {{invoice.merchant.address_line_2}} -
+                            {{invoice.merchant.pincode}}</div>
+                        <div>{{invoice.merchant.primary_phone_no}}</div>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-between w-1/3 border-2 border-slate-900 p-2 rounded">
+                    <div class="flex flex-row justify-center font-bold">
+                    TAX INVOICE
+                    </div>
+                    <div class="flex flex-row justify-between">
+                        <div>Date:</div>
+                        <div>{{invoice.invoice_date}}</div>
+                    </div>
+                    <div class="flex flex-row justify-between">
+                        <div>Invoice no:</div>
+                        <div>{{invoice.invoice_no}}</div>
+                    </div>
+                    <div class="flex flex-row justify-between">
+                        <div>Amount:</div>
+                        <div>{{invoice.product_amount}}</div>
+                    </div>
+                    <div class="flex flex-row justify-between">
+                        <div>Paid:</div>
+                        <div>{{invoice.amount_paid}}</div>
+                    </div>
+                    <div class="flex flex-row justify-between">
+                        <div>Due:</div>
+                        <div>{{invoice.amount_due}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-row border-2 border-slate-900 p-2 rounded space-x-2">
+                <div class="flex flex-col w-2/5 space-y-1">
+                    <div class="font-medium border-b-2 border-slate-900 pb-1">Product Details:</div>
+                    <div>{{invoice.product_name}}</div>
+                    <div>{{invoice.product_serial_number}}</div>
+                </div>
+                <div class="flex flex-col w-1/5 space-y-1">
+                    <div class="flex justify-end font-medium border-b-2 border-slate-900 pb-1">HSN No</div>
+                    <div class="flex justify-end">{{invoice.product_category.hsn_no}}</div>
+                </div>
+                <div class="flex flex-col w-1/5 space-y-1">
+                    <div class="flex justify-end font-medium border-b-2 border-slate-900 pb-1">Quantity</div>
+                    <div class="flex justify-end">1</div>
+                </div>
+                <div class="flex flex-col w-1/5 space-y-1">
+                    <div class="flex font-medium border-b-2 border-slate-900 justify-end pb-1">Amount</div>
+                    <div class="flex justify-end">{{invoice.product_amount}}</div>
+                </div>
+            </div>
+
+            <div class="flex flex-row border-2 border-slate-900 p-2 rounded space-x-2">
+                <div class="flex flex-col w-2/5 space-y-1">
+                    <div class="font-medium border-b-2 border-slate-900 pb-1">Finance Details:</div>
+                    <div>{{invoice.finance_company}}</div>
+                </div>
+                <div class="flex flex-col w-1/5 space-y-1">
+                    <div class="flex justify-end font-medium border-b-2 border-slate-900 pb-1">Months</div>
+                    <div class="flex justify-end">{{invoice.finance_months}}</div>
+                </div>
+                <div class="flex flex-col w-1/5 space-y-1">
+                    <div class="flex justify-end font-medium border-b-2 border-slate-900 pb-1">EMI</div>
+                    <div class="flex justify-end">{{invoice.finance_emi}}</div>
+                </div>
+                <div class="flex flex-col w-1/5 space-y-1">
+                    <div class="flex font-medium border-b-2 border-slate-900 justify-end pb-1">Down Payment</div>
+                    <div class="flex justify-end">{{invoice.finance_dp}}</div>
+                </div>
+            </div>
+
+            <div class="flex flex-row rounded space-x-2">
+                <div class="flex flex-col border-2 border-slate-900 p-2 rounded w-1/3 space-y-1">
+                    <div class="flex font-medium border-b-2 border-slate-900 pb-1 justify-center">Scan and Pay</div>
+                    <div class="flex justify-center w-full h-full">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?data=upi://pay?pa=pinelabs.stq2516347@icici&pn=My Choice&cu=INR&tn=InvoicePayment&amp;size=100x100"
+                            alt="Pinelab_QR_CODE" title="Scan&Pay" />
+                    </div>
+                </div>
+                <div class="flex flex-col w-1/3 space-y-2">
+                    <div class="flex flex-col border-2 border-slate-900 p-2 rounded h-fit space-y-1">
+                        <div class="font-medium border-b-2 border-slate-900 pb-1">Tax BreakUp:</div>
+                        <div class="flex flex-row justify-between">
+                            <div>Taxable Value</div>
+                            <div>{{invoice.taxable_value}}</div>
+                        </div>
+                        <div class="flex flex-row justify-between">
+                            <div>CGST</div>
+                            <div>{{invoice.cgst}}</div>
+                        </div>
+                        <div class="flex flex-row justify-between">
+                            <div>SGST</div>
+                            <div>{{invoice.sgst}}</div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col border-2 border-slate-900 p-2 rounded h-fit space-y-1">
+                        <div class="font-medium border-b-2 border-slate-900 pb-1">Bank Details:</div>
+                        <div class="flex flex-row justify-between">
+                            <div>Bank Name</div>
+                            <div>HDFC Bank</div>
+                        </div>
+                        <div class="flex flex-row justify-between">
+                            <div>Acc No</div>
+                            <div>10662000005544</div>
+                        </div>
+                        <div class="flex flex-row justify-between">
+                            <div>IFSC Code</div>
+                            <div>HDFC0001066</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-between border-2 border-slate-900 p-2 rounded w-1/3 space-y-1">
+                    <div class="font-medium border-b-2 border-slate-900 pb-1">Payment BreakUp:</div>
+                    <div class="flex flex-row justify-between">
+                        <div>Cash</div>
+                        <div>{{invoice.payment_cash}}</div>
+                    </div>
+                    <div class="flex flex-row justify-between">
+                        <div>UPI</div>
+                        <div>{{invoice.payment_upi}}</div>
+                    </div>
+                    <div class="flex flex-row justify-between">
+                        <div>Debit Card</div>
+                        <div>{{invoice.payment_debit_card}}</div>
+                    </div>
+                    <div class="flex flex-row justify-between">
+                        <div>Credit Card</div>
+                        <div>{{invoice.payment_credit_card}}</div>
+                    </div>
+                    <div class="flex flex-row justify-between">
+                        <div>Net banking</div>
+                        <div>{{invoice.payment_net_banking}}</div>
+                    </div>
+                    <div class="flex flex-row justify-between">
+                        <div>Exchange Value</div>
+                        <div>{{invoice.exchange_value}}</div>
+                    </div>
+                    <div class="flex flex-row justify-between py-1 border-y-2 border-slate-900">
+                        <div>Total Paid</div>
+                        <div>{{invoice.amount_paid}}</div>
+                    </div>
+                </div>
+            </div>
+            <footer class="flex flex-row space-x-2 pt-1">
+                <div class="flex flex-col border-2 border-slate-900 p-2 rounded w-1/3 space-y-1">
+                    <div class="font-medium border-b-2 border-slate-900 pb-1">Remark:</div>
+                    <div></div>
+                </div>
+                <div class="flex flex-col space-y-2 w-2/3">
+                    <div class="flex flex-col p-2 border-2 border-slate-900 space-y-1 rounded">
+                        <div class="flex pb-1 border-b-2 border-slate-900">Terms & Conditions:</div>
+                        <div>
+                            <li>The warranty is provided exclusively by the manufacturer and brand. Please refer to the
+                                warranty card for more details.</li>
+                            <li>All disputes are subject to Jamshedpur jurisdiction.</li>
+                        </div>
+                    </div>
+                    <div class="flex flex-row justify-between h-24 p-2 font-bold border-2 border-slate-900 space-y-1 rounded">
+                        <div class="flex flex-col justify-end">Customer's Signature</div>
+                        <div class="flex flex-col justify-end">Merchant's Signature</div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- Put your content here -->
+    </main>
+</body>
+
+<script>
+    const date = new Date();
+    datestring = date.getDate() + '/' + (date.getUTCMonth() + 1) + '/' + date.getFullYear();
+    document.getElementById("date").innerHTML = datestring;
+</script>
+
+</html>
