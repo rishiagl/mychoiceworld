@@ -19,8 +19,124 @@ function App() {
 
   return (
     <>
-      <div className='relative w-dvh'>
-        <div className={`relative flex flex-col justify-center h-screen bg-white bg-center bg-no-repeat bg-cover translate-y ease-in-out duration-1000`}>
+      <div className='relative flex flex-row w-dvh h-dvh space-x-6 px-6'>
+        <div className='flex flex-col justify-center h-full p-2 space-y-4 w-10'>
+          <div className='flex flex-col space-y-4'>
+            <div className='flex flex-col space-y-1'>
+              <div className='flex h-full font-bold text-7xl justify-center font-bungee'>M</div>
+              <div className='flex h-full font-bold text-7xl justify-center font-bungee'>Y</div>
+            </div>
+            <div className='flex flex-col space-y-1'>
+              <div className='flex h-full font-bold text-7xl justify-center font-bungee'>C</div>
+              <div className='flex h-full font-bold text-7xl justify-center font-bungee'>H</div>
+              <div className='flex h-full font-bold text-7xl justify-center font-bungee'>O</div>
+              <div className='flex h-full font-bold text-7xl justify-center font-bungee'>I</div>
+              <div className='flex h-full font-bold text-7xl justify-center font-bungee'>C</div>
+              <div className='flex h-full font-bold text-7xl justify-center font-bungee'>E</div>
+            </div>
+          </div>
+
+        </div>
+        <div className='flex flex-col justify-between h-full p-2 bg-amber-100 space-y-4'>
+          <div className='flex flex-col space-y-4'>
+            <img src='/logo/base_icon.png' className='max-w-64'></img>
+            <div className='flex flex-col font-bold text-lg text-rose-800'>
+              <div className='flex justify-center'>
+                9334638328 / 9334825936</div>
+              <div className='flex justify-center'>
+                contactus@mychoiceworld.in</div>
+              <div className='flex justify-center'>
+                Sakchi, Jamshedpur</div>
+            </div>
+          </div>
+          <div className='flex justify-center font-bold text-3xl text-rose-800 font-serif'>
+            Welcome!!</div>
+          <div className='flex flex-col max-w-64 font-medium text-4xl text-rose-800 font-protest_guerrilla'>
+            <div className='flex justify-center '>"to the Biggest
+            </div>
+            <div className='flex justify-center'> Air Cooler</div>
+            <div className='flex justify-center'>Distributor
+            </div>
+            <div className='flex justify-center'> of Jharkhand"</div>
+          </div>
+          <div className='flex flex-col justify-center space-y-1 text-rose-800 font-medium font-mono text-sm'>
+            <div className='flex justify-center'>Invoice Download | Partner Login</div>
+            <div className='flex justify-center'>Copyright@ mychoice, 2024</div>
+          </div>
+
+          {/* <div className='flex font-bold text-xl justify-center font-bungee'></div> */}
+        </div>
+        <div className='flex flex-col justify-end w-full space-y-4'>
+          <div className="flex min-h-72 bg-center bg-[url('/sym.webp')]">
+          {/* <img src='sym.webp' className='rounded'></img> */}
+          </div>
+          <div className='flex flex-col'>
+            <div className='flex flex-col space-y-2'>
+              <div className='flex justify-center'>Authorized Dealer</div>
+              <div className='flex flex-row w-full justify-center space-x-4'>
+                <div className='flex w-36 h-24'>
+                  <img src='logo/haier.png'></img>
+                </div>
+                <div className='flex w-36 h-20'>
+                  <img src='logo/havells.png'></img>
+                </div>
+                <div className='flex w-36 h-20'>
+                  <img src='logo/lg.png'></img>
+                </div>
+                <div className='flex w-36 h-24'>
+                  <img src='logo/samsung.png'></img>
+                </div>
+                <div className='flex w-36 h-24'>
+                  <img src='logo/voltas.png'></img>
+                </div>
+                <div className='flex w-36 h-24'>
+                  <img src='logo/whirlpool.png'></img>
+                </div>
+              </div>
+            </div>
+            <div className='flex flex-col space-y-2'>
+              <div className='flex justify-center'>Authorized Distributor</div>
+              <div className='flex flex-row w-full justify-center space-x-4'>
+                <div className='flex w-36 h-20'>
+                  <img src='logo/hindware.jpg' className='rounded-md'></img>
+                </div>
+                <div className='flex w-36 h-20'>
+                  <img src='logo/bajaj.png'></img>
+                </div>
+                <div className='flex w-36 h-20'>
+                  <img src='logo/symphony.png'></img>
+                </div>
+                <div className='flex w-36 h-20'>
+                  <img src='logo/orient.png' className='rounded-md'></img>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='flex flex-row justify-between w-full h-54 space-x-2 p-2 bg-amber-200 bg-opacity-50 rounded-md'>
+            <div className='flex w-full border-r-2 border-rose-800'>
+              <div className='flex flex-col w-full justify-between space-y-1 py-4 text-rose-800 text-medium text-xl'>
+                <div className='flex justify-center'>Shop No 4, Block 1, Kalimati Road</div>
+                <div className='flex justify-center'>Beside Railway City Booking</div>
+                <div className='flex justify-center'>Sakchi, Jamshedpur</div>
+              </div>
+            </div>
+            <div className='flex w-full border-r-2 border-rose-800'>
+              <div className='flex flex-col w-full justify-between space-y-1 py-4 text-rose-800 text-medium text-xl'>
+                <div className='flex justify-center'>Shop No 4, Block 1, Kalimati Road</div>
+                <div className='flex justify-center'>Beside Railway City Booking</div>
+                <div className='flex justify-center'>Sakchi, Jamshedpur</div>
+              </div>
+            </div>
+            <div className='flex w-full'>
+              <div className='flex flex-col w-full justify-between space-y-1 py-4 text-rose-800 text-medium text-xl'>
+                <div className='flex justify-center'>Shop No 4, Block 1, Kalimati Road</div>
+                <div className='flex justify-center'>Beside Railway City Booking</div>
+                <div className='flex justify-center'>Sakchi, Jamshedpur</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* <div className={`relative flex flex-col justify-center h-screen bg-white bg-center bg-no-repeat bg-cover translate-y ease-in-out duration-1000`}>
           <div className='flex lg:flex-row flex-col h-full justify-center p-6 space-x-2'>
             <div className='flex flex-col lg:h-full h-2/3 lg:justify-center justify-end lg:w-1/3 p-5 space-y-5'>
               <div className='lg:text-7xl text-5xl text-blue-900 font-medium'>under</div>
@@ -141,7 +257,7 @@ function App() {
               <a href='#contactus' onClick={() => { setIsSliderOpen(!isSliderOpen) }}>Contact Us</a>
             </div>
           </div>
-        </div>
+        </div> */}
       </div >
     </>
   )

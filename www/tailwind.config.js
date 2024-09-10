@@ -19,6 +19,7 @@ export default {
         'logo-voltas': "url('/logo/voltas.png')",
         'logo-bajaj': "url('/logo/bajaj.png')",
         'logo-symphony': "url('/logo/symphony.png')",
+        'logo-symphony': "url('/sym.webp')",
       },
 
       animation: {
@@ -32,7 +33,10 @@ export default {
           },
         },
       },
-
+      fontFamily: {
+        bungee: ["Bungee Tint", "sans-serif"],
+        protest_guerrilla: ["Protest Guerrilla", "sans-serif"],
+      },
     },
     plugins: [],
   }
