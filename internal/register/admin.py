@@ -1,6 +1,6 @@
 from django.contrib import admin, messages
 
-from .models import Brand, Category, Product, GstClassification
+from .models import Brand, Category, Product, IndianState, Account, Organisation
 
 
 admin.site.site_header = "My Choice Enterprise Resource Management"
@@ -29,20 +29,24 @@ def Download_QR_Code(modeladmin, request, queryset):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'model', 'brand', 'category', 'gst_classification')
+    list_display = ('name', 'model', 'brand', 'category')
     list_filter = ["brand", "category", "is_active"]
     search_fields = ("model__startswith",)
     actions = [Download_QR_Code]
 
-
 admin.site.register(Product, ProductAdmin)
 
+class IndianStateAdmin(admin.ModelAdmin):
+    list_display = ('name', 'code',)
 
-class GstClassificationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'code', 'type', 'rate')
+admin.site.register(IndianState, IndianStateAdmin)
 
-    def name(self, obj):
-        return obj
+class AccountAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    
+admin.site.register(Account, AccountAdmin)
 
-
-admin.site.register(GstClassification, GstClassificationAdmin)
+class OrganisationAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    
+admin.site.register(Organisation, OrganisationAdmin)
