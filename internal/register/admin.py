@@ -1,6 +1,6 @@
 from django.contrib import admin, messages
 
-from .models import Brand, Category, Product, IndianState, Account, Organisation
+from .models import Brand, Category, Product, IndianState, Account, Organisation, ProductSerialNo
 
 
 admin.site.site_header = "My Choice Enterprise Resource Management"
@@ -50,3 +50,9 @@ class OrganisationAdmin(admin.ModelAdmin):
     list_display = ('name',)
     
 admin.site.register(Organisation, OrganisationAdmin)
+
+class ProductSerialNoAdmin(admin.ModelAdmin):
+    list_display = ('product', 'number', 'is_validated')
+
+
+admin.site.register(ProductSerialNo, ProductSerialNoAdmin)

@@ -126,3 +126,8 @@ class Organisation(models.Model):
         self.address_line_2 = self.address_line_2.upper()
         self.city = self.city.upper()
         super().save(*args, **kwargs)
+        
+class ProductSerialNo(models.Model):
+    number = models.CharField(max_length=50, unique=True)
+    product = models.ForeignKey(Product, on_delete=models.RESTRICT)
+    is_validated = models.BooleanField(default=False)
