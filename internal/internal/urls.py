@@ -22,8 +22,10 @@ from . import views
 urlpatterns = [
     path("", views.index, name="index"),
     path("__reload__/", include("django_browser_reload.urls")),
-    path('catalog/', include("catalog.urls")),
     path('flipkart/', include("flipkart.urls")),
     path('retail/', include("retail.urls")),
+    path('register/', include("register.urls")),
+    path('transactions/', include("transactions.urls")),
     path('admin/', admin.site.urls),
+    path('inventory', views.inventory, name="inventory")
 ]
