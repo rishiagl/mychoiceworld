@@ -68,4 +68,16 @@ class PurchaseInvoiceItem(models.Model):
     def __str__(self) -> str:
         return self.invoice.invoice_no + '_' + self.product.name
     
+    @property
+    def rate(self):
+        return self.taxable_value + self.cgst + self.sgst + self.igst
+    
+    @property
+    def total_amount(self):
+        return self.rate * self.qty
+    
+    @property
+    def date(self):
+        return self.invoice.invoice_date
+    
 
