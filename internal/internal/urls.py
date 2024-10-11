@@ -21,11 +21,14 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path('inventory', views.inventory, name="inventory"),
+    path('inventory/<int:id>/', views.stock_history, name="stock_history"),
+    path('analysis', views.analysis, name="analysis"),
+    path('daybook', views.daybook, name="daybook"),
     path("__reload__/", include("django_browser_reload.urls")),
     path('flipkart/', include("flipkart.urls")),
     path('retail/', include("retail.urls")),
     path('register/', include("register.urls")),
     path('transactions/', include("transactions.urls")),
     path('admin/', admin.site.urls),
-    path('inventory', views.inventory, name="inventory")
 ]

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="flex flex-col h-full w-screen lg:max-w-sm p-2 space-y-4 justify-start text-base font-medium text-gray-700">
+    <form id="dispatch_form" method="post"
+        class="flex flex-row space-x-1 p-1 justify-end">
+        {% csrf_token %}
+        <!-- <div id="datetime"></div> -->
+        <label class="flex flex-col justify-center">Preview Date:</label>
+        <input id="date" type="date" name="date" class="rounded-lg" required>
+        <button class="flex flex-col justify-center p-2 bg-gray-300 rounded">Submit</button>
+    </form>
+
+    <div class="flex flex-col space-y-2 p-1">
+        <div class="flex p-1 bg-gray-100 rounded border-l-4 border-black">
+            Sales Invoice
+        </div>
+        <div class="flex flex-col space-y-2 p-1 border border-black rounded">
+            <div class="flex flex-row w-full p-1 space-x-2 bg-gray-100">
+                <div class="flex w-5/12">Merchant Name</div>
+                <div class="flex w-5/12">Customer Name</div>
+                <div class="flex w-2/12">Amount</div>
+            </div>
+            {% if not sales_invoices %}
+            <div>No Sales For Today</div>
+            {% endif %}
+            {% for i in sales_invoices %}
+            <div class="flex flex-row w-full p-1 space-x-2">
+                <div class="flex w-5/12">{{i.merchant.name}}</div>
+                <div class="flex w-5/12">{{i.customer_name}}</div>
+                <div class="flex w-2/12">{{i.product_amount}}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="flex flex-col space-y-2 p-1">
+        <div class="flex p-1 bg-gray-100 rounded border-l-4 border-black">
+            Flipkart Orders
+        </div>
+        <div class="flex flex-col space-y-2 p-1 border border-black rounded">
+            <div class="flex flex-row w-full p-1 space-x-2 bg-gray-100">
+                <div class="flex w-6/12">Order ID</div>
+                <div class="flex w-6/12">Tracking ID</div>
+            </div>
+            {% if not flipkart_orders %}
+            <div>No Flipkart Orders For Today</div>
+            {% endif %}
+            {% for i in flipkart_orders %}
+            <div class="flex flex-row w-full p-1 space-x-2">
+                <div class="flex w-6/12">{{i.order_id}}</div>
+                <div class="flex w-6/12">{{i.tracking_id}}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="flex flex-col space-y-2 p-1">
+        <div class="flex p-1 bg-gray-100 rounded border-l-4 border-black">
+            Purchase Invoice
+        </div>
+        <div class="flex flex-col space-y-2 p-1 border border-black rounded">
+            <div class="flex flex-row w-full p-1 space-x-2 bg-gray-100">
+                <div class="flex w-5/12">Organisation</div>
+                <div class="flex w-5/12">Account</div>
+                <div class="flex w-2/12">Amount</div>
+            </div>
+            {% if not purchaseInvoices %}
+            <div>No Purchases For Today</div>
+            {% endif %}
+            {% for i in purchaseInvoices %}
+            <div class="flex flex-row w-full p-1 space-x-2">
+                <div class="flex w-5/12">{{i.organisation.name}}</div>
+                <div class="flex w-5/12">{{i.account.name}}</div>
+                <div class="flex w-2/12">{{i.total_amount}}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var currentdate = new Date();
+    document.getElementById("datetime").innerHTML = currentdate.getDate() + "/" + (currentdate.getMonth() + 1) + "/" + currentdate.getFullYear()
+
+</script>
+{% endblock %}

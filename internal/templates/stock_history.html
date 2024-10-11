@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="flex flex-col h-full w-screen lg:max-w-sm p-2 space-y-2 font-medium justify-start">
+
+    <div class="flex flex-col space-y-2 text-base p-1 shadow border border-black rounded bg-gray-100">
+        <div class="flex flex-row space-x-2">
+            <div>NAME:</div>
+            <div class="flex justify-center text-base">{{product_detail.name}}</div>
+        </div>
+        <div class="flex flex-row space-x-2">
+            <div>QUANTITY:</div>
+            <div class="flex justify-center text-base">{{product_detail.total_qty}}</div>
+        </div>
+        <div class="flex flex-row space-x-2">
+            <div>AVERAGE PRICE:</div>
+            <div class="flex justify-center text-base">{{product_detail.average_rate}}</div>
+        </div>
+    </div>
+
+    <div class="flex flex-col h-full space-y-2 text-base p-1 border border-black shadow overflow-scroll">
+        <div class="flex flex-row w-full space-x-1 p-1 border-b border-black bg-gray-100">
+            <div class="flex w-4/12">Date</div>
+            <div class="flex w-5/12">Supplier</div>
+            <div class="flex w-1/12">Qty</div>
+            <div class="flex w-2/12">Rate</div>
+        </div>
+        {% if not list %}
+        <div>No Purchase Till Date</div>
+        {% endif %}
+        {% for i in list %}
+        <div class="flex flex-row w-full space-x-1 p-1">
+            <div class="flex w-4/12">{{i.date}}</div>
+            <div class="flex w-5/12">{{i.invoice.account}}</div>
+            <div class="flex w-1/12">{{i.qty}}</div>
+            <div class="flex w-2/12">{{i.rate}}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var currentdate = new Date();
+    document.getElementById("datetime").innerHTML = currentdate.getHours() + ":" + currentdate.getMinutes() + ", " + currentdate.getDate() + "/" + (currentdate.getMonth() + 1) + "/" + currentdate.getFullYear()
+    
+</script>
+{% endblock %}
