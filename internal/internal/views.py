@@ -53,3 +53,17 @@ def daybook(request):
     sales_invoices = SingleProductInvoice.objects.filter(invoice_date=date)
     purchaseInvoices = PurchaseInvoice.objects.filter(invoice_date=date)
     return render(request, "daybook.html", {'flipkart_orders': flipkart_orders, 'sales_invoices': sales_invoices, 'purchaseInvoices': purchaseInvoices})
+
+@login_required(login_url="/admin/login/?next=/")
+def get_sales_invoice_html_by_inv_no(request, invoice_no):
+    invoice = SingleProductInvoice.objects.filter(invoice_no=invoice_no).first()
+    if invoice != None:
+        invoice = invoice
+        print(invoice)
+    else:
+        return HttpResponse("<h1>No Invoice with given Invoice No</h1><a href='/'>Go Back</a>")
+    return render(request, "sales_invoice.html", {'invoice': invoice})
+
+@login_required(login_url="/admin/login/?next=/")
+def get_flipkart_order_html_order_id(request, order_id):
+        return HttpResponse("<h1>Not Implemented till now Pls use this</h1><a href='/flipkart/'>Link</a>")

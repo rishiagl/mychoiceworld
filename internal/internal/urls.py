@@ -25,6 +25,8 @@ urlpatterns = [
     path('inventory/<int:id>/', views.stock_history, name="stock_history"),
     path('analysis', views.analysis, name="analysis"),
     path('daybook', views.daybook, name="daybook"),
+    path('sales_invoice/<str:invoice_no>/', views.get_sales_invoice_html_by_inv_no, name="get_sales_invoice_html_by_inv_no"),
+    path('flipkart/<str:order_id>/', views.get_flipkart_order_html_order_id, name="get_flipkart_order_html_order_id"),
     path("__reload__/", include("django_browser_reload.urls")),
     path('flipkart/', include("flipkart.urls")),
     path('retail/', include("retail.urls")),

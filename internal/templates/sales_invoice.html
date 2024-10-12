@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="flex flex-col h-full w-screen lg:max-w-sm p-1 space-y-2 justify-start text-base font-bold text-gray-700">
+    <div class="flex flex-col p-2 space-y-1 shadow border rounded">
+        <div class="flex flex-row space-x-1">
+            <div>Invoice No:</div>
+            <div>{{invoice.invoice_no}}</div>
+        </div>
+        <div class="flex flex-row space-x-1">
+            <div>Invoice Date:</div>
+            <div>{{invoice.invoice_date}}</div>
+        </div>
+        <div class="flex flex-row space-x-1">
+            <div>Merchant:</div>
+            <div>{{invoice.merchant.name}}</div>
+        </div>
+        <div class="flex flex-row space-x-1">
+            <div>Customer Name:</div>
+            <div>{{invoice.customer_name}}</div>
+        </div>
+        <div class="flex flex-row space-x-1">
+            <div>Customer Phone No:</div>
+            <div>{{invoice.customer_phone_number}}</div>
+        </div>
+        <div class="flex flex-row space-x-1">
+            <div>Customer Address:</div>
+            <div class="flex flex-col space-y-1">
+                <div>{{invoice.customer_address_line_1}}</div>
+                <div>{{invoice.customer_address_line_2}}</div>
+                <div>{{invoice.customer_pincode}}</div>
+            </div>
+        </div>
+        <div class="flex flex-row space-x-1">
+            <div>Product Name:</div>
+            <div>{{invoice.product_name}}</div>
+        </div>
+        <div class="flex flex-row space-x-1">
+            <div>Product Amount:</div>
+            <div>{{invoice.product_amount}}</div>
+        </div>
+        <div class="flex flex-row space-x-1">
+            <div>Amount Due:</div>
+            <div>{{invoice.amount_due}}</div>
+        </div>
+        <div class="flex flex-row space-x-1">
+            <div>Finance EMI:</div>
+            <div>{{invoice.finance_emi}} * {{invoice.finance_months}}</div>
+        </div>
+        <div class="flex flex-row space-x-1">
+            <div>Finance DP:</div>
+            <div>{{invoice.finance_dp}}</div>
+        </div>
+        <div class="flex flex-row space-x-1">
+            <div>Finance Disbursement:</div>
+            <div>{{invoice.finance_disbursement}}</div>
+        </div>
+    </div>
+    <div class="flex w-full justify-center">
+        <button onclick="return download_invoice()"
+        class="flex flex-col p-2 px-3 justify-center bg-sky-700 rounded text-white shadow-md">
+        Download Invoice
+    </button>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var currentdate = new Date();
+    document.getElementById("datetime").innerHTML = currentdate.getHours() + ":" + currentdate.getMinutes() + ", " + currentdate.getDate() + "/" + (currentdate.getMonth() + 1) + "/" + currentdate.getFullYear()
+
+    function download_invoice() {
+        const invoice_no = document.getElementById("invoice_no").value;
+        url = '/sales_invoice/' + invoice_no + '/';
+        console.log(url);
+        window.open(
+            url, "_self"
+        );
+        window.focus();
+        return false
+    }
+</script>
+{% endblock %}
