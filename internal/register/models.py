@@ -9,11 +9,9 @@ def validate_Code(value):
 
 class Brand(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    short_name = models.CharField(max_length=7, unique=True, editable=True)
 
     def save(self, *args, **kwargs):
         self.name = self.name.upper()
-        self.short_name = self.short_name.upper()
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -22,11 +20,9 @@ class Brand(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    short_name = models.CharField(max_length=7, unique=True)
 
     def save(self, *args, **kwargs):
         self.name = self.name.upper()
-        self.short_name = self.short_name.upper()
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -60,7 +56,7 @@ class Product(models.Model):
     
     @property
     def name(self, *args, **kwargs):
-        return self.brand.short_name + '-' + self.category.short_name + '-' + self.model
+        return self.brand.name + '-' + self.category.name + '-' + self.model
 
     def save(self, *args, **kwargs):
         self.model = self.model.upper()

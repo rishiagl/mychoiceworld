@@ -9,7 +9,7 @@ admin.site.index_title = "Administration Panel"
 
 
 class BrandAdmin(admin.ModelAdmin):
-    list_display = ('name', 'short_name')
+    list_display = ('name',)
     search_fields = ("name__startswith",)
 
 
@@ -17,7 +17,7 @@ admin.site.register(Brand, BrandAdmin)
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'short_name')
+    list_display = ('name',)
     search_fields = ("name__startswith",)
 
 
