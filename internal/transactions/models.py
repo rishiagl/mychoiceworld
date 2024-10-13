@@ -3,7 +3,8 @@ from register.models import Account, Organisation, Product
 from django.utils.timezone import now
 
 # Create your models here.
-            
+
+
 class PurchaseInvoice(models.Model):
     invoice_date = models.DateField(default=now)
     invoice_no = models.CharField(
@@ -60,24 +61,22 @@ class PurchaseInvoiceItem(models.Model):
     invoice = models.ForeignKey(PurchaseInvoice, on_delete=models.RESTRICT)
     product = models.ForeignKey(Product, on_delete=models.RESTRICT)
     qty = models.IntegerField(default=0)
-    taxable_value = models.IntegerField(blank=False, null=False)
-    cgst = models.IntegerField(blank=False, null=False)
-    sgst = models.IntegerField(blank=False, null=False)
-    igst = models.IntegerField(blank=False, null=False)
+    taxable_value = models.FloatField(blank=False, null=False)
+    cgst = models.FloatField(blank=False, null=False)
+    sgst = models.FloatField(blank=False, null=False)
+    igst = models.FloatField(blank=False, null=False)
 
     def __str__(self) -> str:
         return self.invoice.invoice_no + '_' + self.product.name
-    
+
     @property
     def rate(self):
         return self.taxable_value + self.cgst + self.sgst + self.igst
-    
+
     @property
     def total_amount(self):
         return self.rate * self.qty
-    
+
     @property
     def date(self):
         return self.invoice.invoice_date
-    
-
