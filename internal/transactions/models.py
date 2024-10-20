@@ -23,7 +23,7 @@ class PurchaseInvoice(models.Model):
         for invoiceItem in invoiceItems:
             x = x + (invoiceItem.taxable_value * invoiceItem.qty)
 
-        return x
+        return round(x, 2)
 
     @property
     def total_cgst(self):
@@ -32,7 +32,7 @@ class PurchaseInvoice(models.Model):
         for invoiceItem in invoiceItems:
             x = x + (invoiceItem.cgst * invoiceItem.qty)
 
-        return x
+        return round(x, 2)
 
     @property
     def total_sgst(self):
@@ -41,7 +41,7 @@ class PurchaseInvoice(models.Model):
         for invoiceItem in invoiceItems:
             x = x + (invoiceItem.sgst * invoiceItem.qty)
 
-        return x
+        return round(x, 2)
 
     @property
     def total_igst(self):
@@ -50,11 +50,11 @@ class PurchaseInvoice(models.Model):
         for invoiceItem in invoiceItems:
             x = x + (invoiceItem.igst * invoiceItem.qty)
 
-        return x
+        return round(x, 2)
 
     @property
     def total_amount(self):
-        return self.total_taxable_value + self.total_cgst + self.total_sgst + self.total_igst
+        return round(self.total_taxable_value + self.total_cgst + self.total_sgst + self.total_igst, 2)
 
 
 class PurchaseInvoiceItem(models.Model):
@@ -71,11 +71,11 @@ class PurchaseInvoiceItem(models.Model):
 
     @property
     def rate(self):
-        return self.taxable_value + self.cgst + self.sgst + self.igst
+        return round(self.taxable_value + self.cgst + self.sgst + self.igst, 2)
 
     @property
     def total_amount(self):
-        return self.rate * self.qty
+        return round(self.rate * self.qty, 2)
 
     @property
     def date(self):

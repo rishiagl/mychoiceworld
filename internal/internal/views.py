@@ -16,9 +16,7 @@ def index(request):
 
 @login_required(login_url="/admin/login/?next=/")
 def inventory(request):
-    brands = Brand.objects.all()
-    categories = Category.objects.all()
-    products = Product.objects.all()
+    products = Product.objects.all().order_by('brand__name', 'category__name', 'model')
     return render(request, "inventory.html", {"products": products})
 
 
