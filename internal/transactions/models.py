@@ -58,7 +58,7 @@ class PurchaseInvoice(models.Model):
 
 
 class PurchaseInvoiceItem(models.Model):
-    invoice = models.ForeignKey(PurchaseInvoice, on_delete=models.RESTRICT)
+    invoice = models.ForeignKey(PurchaseInvoice, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.RESTRICT)
     qty = models.IntegerField(default=0)
     taxable_value = models.FloatField(blank=False, null=False)
